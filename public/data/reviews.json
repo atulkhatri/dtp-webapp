@@ -1,0 +1,32 @@
+[
+  {
+    "id": "rev-1",
+    "author": "Maya Chen",
+    "placeName": "Fairmont Waterfront",
+    "placeId": "fairmont-waterfront",
+    "placeType": "stay",
+    "rating": 5,
+    "date": "2025-11-12",
+    "text": "Harbour views were stunning and the staff helped with early check-in after a long flight."
+  },
+  {
+    "id": "rev-2",
+    "author": "Maya Chen",
+    "placeName": "Canada Place",
+    "placeId": "canada-place",
+    "placeType": "explore",
+    "rating": 5,
+    "date": "2025-11-13",
+    "text": "Perfect first stroll after landing — easy to navigate and great photos at sunset."
+  },
+  {
+    "id": "rev-3",
+    "author": "Maya Chen",
+    "placeName": "Granville Island Public Market",
+    "placeId": "granville-island",
+    "placeType": "explore",
+    "rating": 4,
+    "date": "2025-11-14",
+    "text": "Busy but worth it for the food stalls. Go earlier in the morning if you can."
+  }
+]

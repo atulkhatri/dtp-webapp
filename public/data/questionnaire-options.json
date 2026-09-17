@@ -1,0 +1,34 @@
+{
+  "genders": ["Female", "Male", "Non-binary", "Prefer not to say"],
+  "companions": ["Solo", "Partner", "Family", "Friends", "Group"],
+  "travelMeans": ["Airplane", "Train", "Car", "Bus", "Ship"],
+  "travelTypes": ["Cultural", "Active", "Relaxation", "Business", "Adventure", "Food & Culinary"],
+  "countries": [
+    "Singapore",
+    "Canada",
+    "United States",
+    "United Kingdom",
+    "Australia",
+    "Japan",
+    "India",
+    "Germany",
+    "France",
+    "Mexico"
+  ],
+  "destinations": [
+    "Vancouver, Canada",
+    "Toronto, Canada",
+    "Montreal, Canada",
+    "New York, USA",
+    "London, UK",
+    "Tokyo, Japan",
+    "Singapore",
+    "Sydney, Australia"
+  ],
+  "vaccinationOptions": [
+    "Fully Vaccinated",
+    "Partially Vaccinated",
+    "Not Vaccinated",
+    "Prefer not to say"
+  ]
+}

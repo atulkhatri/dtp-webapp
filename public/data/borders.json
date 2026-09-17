@@ -1,0 +1,70 @@
+{
+  "country": "Canada",
+  "flagEmoji": "🇨🇦",
+  "bannerTitle": "Canada",
+  "sections": [
+    {
+      "id": "entry",
+      "title": "Entry Requirements",
+      "links": [
+        {
+          "id": "entry-visa",
+          "title": "Visa and eTA requirements",
+          "body": "Most visitors need a visa or an Electronic Travel Authorization (eTA) to enter Canada. Check whether your nationality requires a visitor visa, eTA, or is visa-exempt before you travel. Carry a valid passport and return or onward ticket."
+        },
+        {
+          "id": "entry-passport",
+          "title": "Passport validity",
+          "body": "Your passport should be valid for the duration of your stay. Some airlines require at least six months of remaining validity. Keep a digital copy of your passport bio page in a secure place."
+        },
+        {
+          "id": "entry-customs",
+          "title": "What you can bring",
+          "body": "Declare food, plants, animals, and large amounts of currency. Alcohol and tobacco have personal exemption limits. Restricted items include firearms and certain food products."
+        }
+      ]
+    },
+    {
+      "id": "testing",
+      "title": "Testing and Quarantine Requirements",
+      "links": [
+        {
+          "id": "testing-current",
+          "title": "Current health measures",
+          "body": "COVID-era quarantine and pre-arrival testing requirements have largely been lifted for most travellers. Always verify the latest Government of Canada travel health notices before departure, as measures can change for specific outbreaks."
+        },
+        {
+          "id": "testing-vaccine",
+          "title": "Vaccination recommendations",
+          "body": "Routine vaccinations should be up to date. Proof of vaccination is no longer required for most entries, but carrying digital or paper records can still help at borders or if rules change."
+        },
+        {
+          "id": "testing-insurance",
+          "title": "Travel health insurance",
+          "body": "Canada does not provide free medical care to visitors. Purchase travel medical insurance that covers emergency care, hospitalization, and medical evacuation."
+        }
+      ]
+    },
+    {
+      "id": "situation",
+      "title": "Situation in Canada",
+      "links": [
+        {
+          "id": "sit-safety",
+          "title": "Safety and security",
+          "body": "Canada is generally safe for travellers. Stay aware in busy tourist areas, secure valuables, and follow local advisories for weather and wilderness travel in BC."
+        },
+        {
+          "id": "sit-weather",
+          "title": "Weather in Vancouver",
+          "body": "Vancouver summers are mild and pleasant; winters are cool and rainy. Pack layers and a light rain jacket year-round. Check Environment Canada forecasts before outdoor plans."
+        },
+        {
+          "id": "sit-currency",
+          "title": "Currency and payments",
+          "body": "The currency is the Canadian dollar (CAD). Credit cards are widely accepted. Notify your bank of travel dates to avoid card blocks."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "maya-chen",
+  "name": "Maya Chen",
+  "email": "maya.chen@example.com",
+  "gender": "Female",
+  "occupation": "Product Designer",
+  "countryOfResidence": "Singapore",
+  "origin": "Singapore",
+  "destination": "Vancouver, Canada",
+  "preferredTravelType": "Cultural",
+  "vaccinationStatus": "Fully Vaccinated",
+  "locationSharing": true,
+  "notifications": true,
+  "companions": "Solo",
+  "travelMeans": "Airplane",
+  "avatarUrl": ""
+}
