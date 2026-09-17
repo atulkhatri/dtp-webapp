@@ -1,10 +1,26 @@
+import {
+  ActionIcon,
+  Badge,
+  Button,
+  Card,
+  Checkbox,
+  Drawer,
+  Group,
+  Image,
+  RangeSlider,
+  SimpleGrid,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from '@mantine/core'
+import { notifications } from '@mantine/notifications'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../app/AuthContext'
-import { useToast } from '../app/ToastContext'
 import { dataClient } from '../data/client'
 import type { Stay, StaySearchDefaults } from '../data/types'
-import { Header } from '../components/Header'
+import { AppHeader } from '../components/Header'
 import { MapView } from '../components/MapView'
 
 interface StaysPageProps {
@@ -62,139 +78,126 @@ export function StaysPage({ onMenu }: StaysPageProps) {
     })
   }, [stays, searched, location, petFriendly, maxPrice, selectedAmenities])
 
-  if (!defaults) return <div className="loading">Loading…</div>
+  if (!defaults) return <Text p="xl">Loading…</Text>
 
   return (
-    <div className="page with-tabs with-header">
-      <Header title="Stays" showMenu onMenu={onMenu} />
-      <h1 className="h1">{defaults.heading}</h1>
-      <div className="stack">
-        <div>
-          <label className="label">Location</label>
-          <input className="field soft" value={location} onChange={(e) => setLocation(e.target.value)} />
-        </div>
-        <div className="btn-row">
-          <div>
-            <label className="label">Check-in</label>
-            <input className="field soft" value={checkInLabel} onChange={(e) => setCheckInLabel(e.target.value)} />
-          </div>
-          <div>
-            <label className="label">Check-out</label>
-            <input className="field soft" value={checkOutLabel} onChange={(e) => setCheckOutLabel(e.target.value)} />
-          </div>
-        </div>
-        <div>
-          <label className="label">Rooms & guests</label>
-          <button
-            type="button"
-            className="field soft"
-            style={{ textAlign: 'left' }}
-            onClick={() => {
-              setRooms((r) => (r >= 2 ? 1 : r + 1))
-              setGuests((g) => (g >= 4 ? 2 : g + 1))
-            }}
-          >
-            {rooms} room, {guests} guests
-          </button>
-        </div>
-        <label className="checkbox">
-          <input type="checkbox" checked={petFriendly} onChange={(e) => setPetFriendly(e.target.checked)} />
-          Pet-friendly
-        </label>
-        <button className="btn btn-primary btn-block" onClick={() => setSearched(true)}>
+    <Stack gap={0}>
+      <AppHeader title="Stays" showMenu onMenu={onMenu} />
+      <Stack gap="md" p="md" pb={100}>
+        <Title order={3}>{defaults.heading}</Title>
+        <TextInput label="Location" value={location} onChange={(e) => setLocation(e.currentTarget.value)} />
+        <Group grow>
+          <TextInput label="Check-in" value={checkInLabel} onChange={(e) => setCheckInLabel(e.currentTarget.value)} />
+          <TextInput label="Check-out" value={checkOutLabel} onChange={(e) => setCheckOutLabel(e.currentTarget.value)} />
+        </Group>
+        <Button
+          variant="default"
+          justify="flex-start"
+          onClick={() => {
+            setRooms((r) => (r >= 2 ? 1 : r + 1))
+            setGuests((g) => (g >= 4 ? 2 : g + 1))
+          }}
+        >
+          {rooms} room, {guests} guests
+        </Button>
+        <Checkbox
+          label="Pet-friendly"
+          checked={petFriendly}
+          onChange={(e) => setPetFriendly(e.currentTarget.checked)}
+        />
+        <Button fullWidth onClick={() => setSearched(true)}>
           Find
-        </button>
-        <div className="row between">
-          <button className="btn btn-secondary" onClick={() => setShowFilters(true)}>
+        </Button>
+        <Group grow>
+          <Button variant="light" onClick={() => setShowFilters(true)}>
             Filters
-          </button>
-          <button className="btn btn-secondary" onClick={() => navigate('/stays/map', { state: { ids: results.map((r) => r.id) } })}>
+          </Button>
+          <Button variant="light" onClick={() => navigate('/stays/map')}>
             View Map
-          </button>
-        </div>
-      </div>
+          </Button>
+        </Group>
 
-      <h2 className="h2" style={{ marginTop: 20 }}>
-        Suggested stays
-      </h2>
-      {results.length === 0 ? (
-        <div className="empty">
-          <p>No stays match your filters.</p>
-          <button
-            className="btn btn-primary"
-            onClick={() => {
-              setSelectedAmenities([])
-              setMaxPrice(400)
-              setPetFriendly(false)
-              setSearched(true)
-            }}
-          >
-            Clear filters
-          </button>
-        </div>
-      ) : (
-        <div className="grid-2">
-          {results.map((stay) => (
-            <Link key={stay.id} to={`/stays/${stay.id}`} className="stay-card" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <div className="card-media">
-                <img src={stay.imageUrl} alt={stay.name} />
-              </div>
-              <div className="name">{stay.name}</div>
-              <div className="tiny">{stay.neighborhood}</div>
-              <div className="muted">from ${stay.priceFrom}</div>
-            </Link>
-          ))}
-        </div>
-      )}
+        <Title order={4} mt="sm">
+          Suggested stays
+        </Title>
+        {results.length === 0 ? (
+          <Stack align="center" py="xl">
+            <Text c="dimmed">No stays match your filters.</Text>
+            <Button
+              onClick={() => {
+                setSelectedAmenities([])
+                setMaxPrice(400)
+                setPetFriendly(false)
+                setSearched(true)
+              }}
+            >
+              Clear filters
+            </Button>
+          </Stack>
+        ) : (
+          <SimpleGrid cols={2} spacing="sm">
+            {results.map((stay) => (
+              <Card key={stay.id} component={Link} to={`/stays/${stay.id}`} padding="xs" radius="md" withBorder style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Card.Section>
+                  <Image src={stay.imageUrl} h={110} alt={stay.name} />
+                </Card.Section>
+                <Text fw={700} size="sm" mt="xs" lineClamp={2}>
+                  {stay.name}
+                </Text>
+                <Text size="xs" c="dimmed">
+                  {stay.neighborhood}
+                </Text>
+                <Text size="sm" c="dtp" fw={600}>
+                  from ${stay.priceFrom}
+                </Text>
+              </Card>
+            ))}
+          </SimpleGrid>
+        )}
+      </Stack>
 
-      {showFilters ? (
-        <div className="sheet-backdrop" onClick={() => setShowFilters(false)}>
-          <div className="sheet" onClick={(e) => e.stopPropagation()}>
-            <h2 className="h2">Filters</h2>
-            <label className="label">Max price per night: ${maxPrice}</label>
-            <input
-              type="range"
-              min={100}
-              max={400}
-              step={10}
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(Number(e.target.value))}
-              style={{ width: '100%' }}
-            />
-            <div className="stack" style={{ marginTop: 12 }}>
-              {amenityOptions.map((a) => (
-                <label key={a} className="checkbox">
-                  <input
-                    type="checkbox"
-                    checked={selectedAmenities.includes(a)}
-                    onChange={(e) => {
-                      setSelectedAmenities((prev) =>
-                        e.target.checked ? [...prev, a] : prev.filter((x) => x !== a),
-                      )
-                    }}
-                  />
-                  {a}
-                </label>
-              ))}
-            </div>
-            <div className="btn-row" style={{ marginTop: 16 }}>
-              <button
-                className="btn btn-secondary"
-                onClick={() => {
-                  setSelectedAmenities([])
-                  setMaxPrice(400)
+      <Drawer opened={showFilters} onClose={() => setShowFilters(false)} position="bottom" title="Filters" size="auto">
+        <Stack gap="md" pb="md">
+          <Text size="sm" fw={600}>
+            Max price per night: ${maxPrice}
+          </Text>
+          <RangeSlider
+            min={100}
+            max={400}
+            step={10}
+            value={[100, maxPrice]}
+            onChange={(v) => setMaxPrice(v[1])}
+            label={(v) => `$${v}`}
+          />
+          <Stack gap="xs">
+            {amenityOptions.map((a) => (
+              <Checkbox
+                key={a}
+                label={a}
+                checked={selectedAmenities.includes(a)}
+                onChange={(e) => {
+                  setSelectedAmenities((prev) =>
+                    e.currentTarget.checked ? [...prev, a] : prev.filter((x) => x !== a),
+                  )
                 }}
-              >
-                Clear
-              </button>
-              <button className="btn btn-primary" onClick={() => setShowFilters(false)}>
-                Apply
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
-    </div>
+              />
+            ))}
+          </Stack>
+          <Group grow>
+            <Button
+              variant="light"
+              onClick={() => {
+                setSelectedAmenities([])
+                setMaxPrice(400)
+              }}
+            >
+              Clear
+            </Button>
+            <Button onClick={() => setShowFilters(false)}>Apply</Button>
+          </Group>
+        </Stack>
+      </Drawer>
+    </Stack>
   )
 }
 
@@ -207,21 +210,19 @@ export function StaysMapPage() {
   }, [])
 
   return (
-    <div className="page with-tabs with-header">
-      <Header title="Stays Map" showBack backTo="/stays" />
-      <div style={{ height: 420, marginBottom: 12 }}>
+    <Stack gap={0}>
+      <AppHeader title="Stays Map" showBack backTo="/stays" />
+      <Stack p="md" pb={100}>
         <MapView
           pins={stays.map((s) => ({ id: s.id, name: s.name, lat: s.lat, lng: s.lng }))}
           onSelect={(id) => navigate(`/stays/${id}`)}
           height={420}
         />
-      </div>
-      <div className="fab-row">
-        <button className="fab" aria-label="Back to list" onClick={() => navigate('/stays')}>
-          ☰
-        </button>
-      </div>
-    </div>
+        <Button variant="light" onClick={() => navigate('/stays')}>
+          View List
+        </Button>
+      </Stack>
+    </Stack>
   )
 }
 
@@ -229,84 +230,106 @@ export function StayDetailPage() {
   const { id } = useParams()
   const [stay, setStay] = useState<Stay | null>(null)
   const { favorites, toggleFav } = useAuth()
-  const { toast } = useToast()
   const [chatOpen, setChatOpen] = useState(false)
 
   useEffect(() => {
     void dataClient.getStays().then((list) => setStay(list.find((s) => s.id === id) ?? null))
   }, [id])
 
-  if (!stay) return <div className="loading">Loading…</div>
+  if (!stay) return <Text p="xl">Loading…</Text>
   const fav = favorites.stays.includes(stay.id)
 
   return (
-    <div className="page with-tabs with-header">
-      <Header title={stay.name} showBack backTo="/stays" />
-      <div className="detail-hero">
-        <img src={stay.imageUrl} alt={stay.name} />
-        <div className="caption">
-          <div style={{ fontWeight: 800, fontSize: '1.2rem' }}>{stay.name}</div>
-          <div>{stay.neighborhood}</div>
-        </div>
+    <Stack gap={0}>
+      <AppHeader title={stay.name} showBack backTo="/stays" />
+      <div style={{ position: 'relative' }}>
+        <Image src={stay.imageUrl} h={210} fit="cover" alt={stay.name} />
+        <Stack gap={0} style={{ position: 'absolute', left: 16, bottom: 14 }} c="white">
+          <Text fw={800} size="lg" style={{ textShadow: '0 2px 8px rgba(0,0,0,.45)' }}>
+            {stay.name}
+          </Text>
+          <Text size="sm" style={{ textShadow: '0 2px 8px rgba(0,0,0,.45)' }}>
+            {stay.neighborhood}
+          </Text>
+        </Stack>
       </div>
-      <div className="profile-row row between">
-        <span className="label" style={{ margin: 0 }}>
-          Favorite
-        </span>
-        <button className="heart-outline" onClick={() => toggleFav('stays', stay.id)} aria-label="Favorite">
-          {fav ? '♥' : '♡'}
-        </button>
-      </div>
-      <div className="profile-row">
-        <div className="label">Rating</div>
+      <Stack gap="sm" p="md" pb={100}>
+        <Group justify="space-between">
+          <Text size="sm" c="dimmed">
+            Favorite
+          </Text>
+          <ActionIcon variant="subtle" color="red" size="lg" onClick={() => toggleFav('stays', stay.id)}>
+            <Text size="xl">{fav ? '♥' : '♡'}</Text>
+          </ActionIcon>
+        </Group>
+        <Detail label="Rating" value={`${stay.rating} / 5`} />
+        <Detail label="Address" value={stay.address} />
+        <Detail label="Price per night" value={`from $${stay.priceFrom}`} />
         <div>
-          {stay.rating} / 5 <span className="hearts">{'♥'.repeat(stay.rating)}</span>
+          <Text size="sm" c="dimmed">
+            Website
+          </Text>
+          <Text component="a" href={stay.website} target="_blank" rel="noreferrer" c="dtp" size="sm">
+            {stay.website}
+          </Text>
         </div>
-      </div>
-      <div className="profile-row">
-        <div className="label">Address</div>
-        <div>{stay.address}</div>
-      </div>
-      <div className="profile-row">
-        <div className="label">Price per night</div>
-        <div>from ${stay.priceFrom}</div>
-      </div>
-      <div className="profile-row">
-        <div className="label">Website</div>
-        <a href={stay.website} target="_blank" rel="noreferrer">
-          {stay.website}
-        </a>
-      </div>
-      <div className="profile-row row between">
-        <div>
-          <div className="label">Phone</div>
-          <div>{stay.phone}</div>
-        </div>
-        <div className="row">
-          <button className="fab" style={{ position: 'static' }} onClick={() => setChatOpen(true)} aria-label="Chat">
-            💬
-          </button>
-          <a className="fab" style={{ position: 'static' }} href={`tel:${stay.phone.replace(/\s/g, '')}`} aria-label="Call">
-            📞
-          </a>
-        </div>
-      </div>
-      <p className="muted">{stay.description}</p>
+        <Group justify="space-between" align="flex-end">
+          <Detail label="Phone" value={stay.phone} />
+          <Group>
+            <ActionIcon variant="light" size="xl" radius="xl" onClick={() => setChatOpen(true)}>
+              💬
+            </ActionIcon>
+            <ActionIcon
+              component="a"
+              href={`tel:${stay.phone.replace(/\s/g, '')}`}
+              variant="light"
+              size="xl"
+              radius="xl"
+            >
+              📞
+            </ActionIcon>
+          </Group>
+        </Group>
+        <Text c="dimmed">{stay.description}</Text>
+        <Group gap="xs">
+          {stay.amenities.map((a) => (
+            <Badge key={a} variant="light">
+              {a}
+            </Badge>
+          ))}
+        </Group>
+      </Stack>
 
-      {chatOpen ? (
-        <div className="sheet-backdrop" onClick={() => setChatOpen(false)}>
-          <div className="sheet" onClick={(e) => e.stopPropagation()}>
-            <h2 className="h2">Concierge chat</h2>
-            <p className="muted">Concierge will reply soon. This is a demo conversation.</p>
-            <input className="field" placeholder="Type a message…" onKeyDown={(e) => {
-              if (e.key === 'Enter') toast('Message sent (demo)')
-            }} />
-            <button className="btn btn-primary btn-block" style={{ marginTop: 12 }} onClick={() => { toast('Message sent (demo)'); setChatOpen(false) }}>
-              Send
-            </button>
-          </div>
-        </div>
-      ) : null}
+      <Drawer opened={chatOpen} onClose={() => setChatOpen(false)} position="bottom" title="Concierge chat">
+        <Stack>
+          <Text c="dimmed">Concierge will reply soon. This is a demo conversation.</Text>
+          <TextInput
+            placeholder="Type a message…"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') notifications.show({ message: 'Message sent (demo)' })
+            }}
+          />
+          <Button
+            onClick={() => {
+              notifications.show({ message: 'Message sent (demo)' })
+              setChatOpen(false)
+            }}
+          >
+            Send
+          </Button>
+        </Stack>
+      </Drawer>
+    </Stack>
+  )
+}
+
+function Detail({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <Text size="sm" c="dimmed">
+        {label}
+      </Text>
+      <Text fw={700}>{value}</Text>
     </div>
   )
 }

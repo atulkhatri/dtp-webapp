@@ -1,8 +1,18 @@
+import {
+  Button,
+  Card,
+  Drawer,
+  Image,
+  SimpleGrid,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { dataClient } from '../data/client'
 import type { TripData } from '../data/types'
-import { Header } from '../components/Header'
+import { AppHeader } from '../components/Header'
 
 interface OnTheWayPageProps {
   onMenu: () => void
@@ -10,28 +20,38 @@ interface OnTheWayPageProps {
 
 export function OnTheWayPage({ onMenu }: OnTheWayPageProps) {
   return (
-    <div className="page with-tabs with-header">
-      <Header title="On the Way" showMenu onMenu={onMenu} />
-      <h1 className="h1">Your journey toolkit</h1>
-      <div className="grid-2" style={{ marginTop: 8 }}>
-        <Link to="/on-the-way/booking" className="tile" style={{ textDecoration: 'none' }}>
-          <span className="icon">🧾</span>
-          Booking Information
-        </Link>
-        <Link to="/on-the-way/flight" className="tile" style={{ textDecoration: 'none' }}>
-          <span className="icon">✈️</span>
-          Flight Information
-        </Link>
-        <Link to="/on-the-way/airport" className="tile" style={{ textDecoration: 'none' }}>
-          <span className="icon">🛫</span>
-          Airport Information
-        </Link>
-        <Link to="/on-the-way/transport" className="tile" style={{ textDecoration: 'none' }}>
-          <span className="icon">🚌</span>
-          Transportation
-        </Link>
-      </div>
-    </div>
+    <Stack gap={0}>
+      <AppHeader title="On the Way" showMenu onMenu={onMenu} />
+      <Stack gap="md" p="md" pb={100}>
+        <Title order={3}>Your journey toolkit</Title>
+        <SimpleGrid cols={2} spacing="sm">
+          <HubTile to="/on-the-way/booking" icon="🧾" label="Booking Information" />
+          <HubTile to="/on-the-way/flight" icon="✈️" label="Flight Information" />
+          <HubTile to="/on-the-way/airport" icon="🛫" label="Airport Information" />
+          <HubTile to="/on-the-way/transport" icon="🚌" label="Transportation" />
+        </SimpleGrid>
+      </Stack>
+    </Stack>
+  )
+}
+
+function HubTile({ to, icon, label }: { to: string; icon: string; label: string }) {
+  return (
+    <Card
+      component={Link}
+      to={to}
+      padding="lg"
+      radius="md"
+      bg="dtp.0"
+      style={{ textDecoration: 'none', color: 'inherit', minHeight: 110 }}
+    >
+      <Text size="xl" mb={8}>
+        {icon}
+      </Text>
+      <Text fw={700} c="dtp.6">
+        {label}
+      </Text>
+    </Card>
   )
 }
 
@@ -43,54 +63,54 @@ export function FlightPage() {
     void dataClient.getTrip().then(setTrip)
   }, [])
 
-  if (!trip) return <div className="loading">Loading…</div>
+  if (!trip) return <Text p="xl">Loading…</Text>
   const f = trip.flight
 
   return (
-    <div className="page with-tabs with-header">
-      <Header title="Flight Information" showBack backTo="/on-the-way" />
-      <div className="banner" style={{ background: 'linear-gradient(135deg, #7879ff, #78b1c2)' }}>
-        {f.airline}
-        <div style={{ fontSize: '1rem', fontWeight: 600, marginTop: 6 }}>
-          {f.flightNumber} · {f.status}
-        </div>
-      </div>
-      <Info label="From" value={f.from} />
-      <Info label="To" value={f.to} />
-      <Info label="Departure" value={f.departureLabel} />
-      <Info label="Check-in before" value={f.checkInBefore} />
-      <Info label="Boarding" value={f.boarding} />
-      <Info label="Gate" value={f.gate} />
-      <Info label="Class" value={f.class} />
-      <Info label="Seat" value={f.seat} />
-      <Info label="Terminal" value={f.terminal} />
-      <Info label="Confirmation" value={f.confirmationCode} />
-      <button className="btn btn-primary btn-block" style={{ marginTop: 16 }} onClick={() => setBoardingOpen(true)}>
-        Boarding Pass
-      </button>
+    <Stack gap={0}>
+      <AppHeader title="Flight Information" showBack backTo="/on-the-way" />
+      <Stack gap="sm" p="md" pb={100}>
+        <Card padding="lg" radius="md" style={{ background: 'linear-gradient(135deg, #7879ff, #78b1c2)', color: '#fff' }}>
+          <Text fw={800} size="xl">
+            {f.airline}
+          </Text>
+          <Text>
+            {f.flightNumber} · {f.status}
+          </Text>
+        </Card>
+        <Info label="From" value={f.from} />
+        <Info label="To" value={f.to} />
+        <Info label="Departure" value={f.departureLabel} />
+        <Info label="Check-in before" value={f.checkInBefore} />
+        <Info label="Boarding" value={f.boarding} />
+        <Info label="Gate" value={f.gate} />
+        <Info label="Class" value={f.class} />
+        <Info label="Seat" value={f.seat} />
+        <Info label="Terminal" value={f.terminal} />
+        <Info label="Confirmation" value={f.confirmationCode} />
+        <Button mt="md" onClick={() => setBoardingOpen(true)}>
+          Boarding Pass
+        </Button>
+      </Stack>
 
-      {boardingOpen ? (
-        <div className="sheet-backdrop" onClick={() => setBoardingOpen(false)}>
-          <div className="sheet" onClick={(e) => e.stopPropagation()}>
-            <div className="boarding-pass">
-              <div style={{ fontWeight: 800, fontSize: '1.2rem' }}>{f.airline}</div>
-              <div>{f.flightNumber}</div>
-              <div className="code" aria-hidden>
-                QR
-              </div>
-              <div style={{ fontWeight: 700 }}>{f.passengerName}</div>
-              <div style={{ marginTop: 8 }}>
-                Gate {f.gate} · Seat {f.seat}
-              </div>
-              <div style={{ opacity: 0.9, marginTop: 4 }}>{f.departureLabel}</div>
-            </div>
-            <button className="btn btn-secondary btn-block" style={{ marginTop: 12 }} onClick={() => setBoardingOpen(false)}>
-              Close
-            </button>
+      <Drawer opened={boardingOpen} onClose={() => setBoardingOpen(false)} position="bottom" title="Boarding Pass" size="auto">
+        <div className="boarding-pass">
+          <div style={{ fontWeight: 800, fontSize: '1.2rem' }}>{f.airline}</div>
+          <div>{f.flightNumber}</div>
+          <div className="code" aria-hidden>
+            QR
           </div>
+          <div style={{ fontWeight: 700 }}>{f.passengerName}</div>
+          <div style={{ marginTop: 8 }}>
+            Gate {f.gate} · Seat {f.seat}
+          </div>
+          <div style={{ opacity: 0.9, marginTop: 4 }}>{f.departureLabel}</div>
         </div>
-      ) : null}
-    </div>
+        <Button variant="light" fullWidth mt="md" onClick={() => setBoardingOpen(false)}>
+          Close
+        </Button>
+      </Drawer>
+    </Stack>
   )
 }
 
@@ -101,29 +121,32 @@ export function AirportHubPage() {
     void dataClient.getTrip().then(setTrip)
   }, [])
 
-  if (!trip) return <div className="loading">Loading…</div>
+  if (!trip) return <Text p="xl">Loading…</Text>
 
   return (
-    <div className="page with-tabs with-header">
-      <Header title="Airport Information" showBack backTo="/on-the-way" />
-      <h1 className="h1">{trip.airport.name}</h1>
-      <p className="muted">{trip.airport.code}</p>
-      <div className="stack" style={{ marginTop: 12 }}>
+    <Stack gap={0}>
+      <AppHeader title="Airport Information" showBack backTo="/on-the-way" />
+      <Stack gap="md" p="md" pb={100}>
+        <Title order={3}>{trip.airport.name}</Title>
+        <Text c="dimmed">{trip.airport.code}</Text>
         {trip.airport.categories.map((cat) => (
-          <Link
+          <Card
             key={cat.id}
+            component={Link}
             to={`/on-the-way/airport/${cat.id}`}
-            className="tile"
-            style={{ textDecoration: 'none', minHeight: 72 }}
+            padding="md"
+            radius="md"
+            bg="dtp.0"
+            style={{ textDecoration: 'none', color: 'inherit' }}
           >
-            <span style={{ fontWeight: 800 }}>{cat.title}</span>
-            <span className="muted" style={{ fontWeight: 500 }}>
+            <Text fw={800}>{cat.title}</Text>
+            <Text size="sm" c="dimmed">
               {cat.summary}
-            </span>
-          </Link>
+            </Text>
+          </Card>
         ))}
-      </div>
-    </div>
+      </Stack>
+    </Stack>
   )
 }
 
@@ -136,23 +159,23 @@ export function AirportCategoryPage() {
   }, [])
 
   const cat = trip?.airport.categories.find((c) => c.id === categoryId)
-  if (!trip || !cat) return <div className="loading">Loading…</div>
+  if (!trip || !cat) return <Text p="xl">Loading…</Text>
 
   return (
-    <div className="page with-tabs with-header">
-      <Header title={cat.title} showBack backTo="/on-the-way/airport" />
-      <div className="card-media" style={{ height: 160, marginBottom: 12 }}>
-        <img src={cat.imageUrl} alt={cat.title} />
-      </div>
-      <p className="muted">{cat.summary}</p>
-      <ul>
-        {cat.tips.map((tip) => (
-          <li key={tip} style={{ marginBottom: 8 }}>
-            {tip}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Stack gap={0}>
+      <AppHeader title={cat.title} showBack backTo="/on-the-way/airport" />
+      <Stack gap="md" p="md" pb={100}>
+        <Image src={cat.imageUrl} h={160} radius="md" alt={cat.title} />
+        <Text c="dimmed">{cat.summary}</Text>
+        <Stack gap="xs" component="ul" style={{ paddingLeft: 20, margin: 0 }}>
+          {cat.tips.map((tip) => (
+            <Text key={tip} component="li">
+              {tip}
+            </Text>
+          ))}
+        </Stack>
+      </Stack>
+    </Stack>
   )
 }
 
@@ -163,22 +186,24 @@ export function BookingPage() {
     void dataClient.getTrip().then(setTrip)
   }, [])
 
-  if (!trip) return <div className="loading">Loading…</div>
+  if (!trip) return <Text p="xl">Loading…</Text>
   const b = trip.booking
 
   return (
-    <div className="page with-tabs with-header">
-      <Header title="Booking Information" showBack backTo="/on-the-way" />
-      <h1 className="h1">Your itinerary</h1>
-      <Info label="Hotel" value={b.hotelName} />
-      <Info label="Confirmation" value={b.hotelConfirmation} />
-      <Info label="Stay" value={`${b.checkIn} → ${b.checkOut}`} />
-      <Info label="Rooms / guests" value={`${b.rooms} room · ${b.guests} guests`} />
-      <Info label="Flight" value={b.flightSummary} />
-      <p className="muted" style={{ marginTop: 12 }}>
-        {b.notes}
-      </p>
-    </div>
+    <Stack gap={0}>
+      <AppHeader title="Booking Information" showBack backTo="/on-the-way" />
+      <Stack gap="sm" p="md" pb={100}>
+        <Title order={3}>Your itinerary</Title>
+        <Info label="Hotel" value={b.hotelName} />
+        <Info label="Confirmation" value={b.hotelConfirmation} />
+        <Info label="Stay" value={`${b.checkIn} → ${b.checkOut}`} />
+        <Info label="Rooms / guests" value={`${b.rooms} room · ${b.guests} guests`} />
+        <Info label="Flight" value={b.flightSummary} />
+        <Text c="dimmed" mt="sm">
+          {b.notes}
+        </Text>
+      </Stack>
+    </Stack>
   )
 }
 
@@ -191,46 +216,45 @@ export function TransportPage() {
     void dataClient.getTrip().then(setTrip)
   }, [])
 
-  if (!trip) return <div className="loading">Loading…</div>
+  if (!trip) return <Text p="xl">Loading…</Text>
   const selected = trip.transportation.find((t) => t.id === openId)
 
   return (
-    <div className="page with-tabs with-header">
-      <Header title="Transportation" showBack backTo="/on-the-way" />
-      <div className="stack">
+    <Stack gap={0}>
+      <AppHeader title="Transportation" showBack backTo="/on-the-way" />
+      <Stack gap="sm" p="md" pb={100}>
         {trip.transportation.map((item) => (
-          <button key={item.id} className="tile" onClick={() => setOpenId(item.id)}>
-            <span>{item.name}</span>
-            <span className="muted" style={{ fontWeight: 500 }}>
+          <Card key={item.id} padding="md" radius="md" bg="dtp.0" onClick={() => setOpenId(item.id)} style={{ cursor: 'pointer' }}>
+            <Text fw={800}>{item.name}</Text>
+            <Text size="sm" c="dimmed">
               {item.detail}
-            </span>
-          </button>
+            </Text>
+          </Card>
         ))}
-      </div>
-      {selected ? (
-        <div className="sheet-backdrop" onClick={() => setOpenId(null)}>
-          <div className="sheet" onClick={(e) => e.stopPropagation()}>
-            <h2 className="h2">{selected.name}</h2>
-            <p>{selected.detail}</p>
-            <p className="muted">{selected.tips}</p>
-            <button className="btn btn-primary btn-block" onClick={() => setOpenId(null)}>
-              Done
-            </button>
-            <button className="btn btn-ghost btn-block" onClick={() => navigate('/on-the-way')}>
+      </Stack>
+      <Drawer opened={!!selected} onClose={() => setOpenId(null)} position="bottom" title={selected?.name}>
+        {selected ? (
+          <Stack>
+            <Text>{selected.detail}</Text>
+            <Text c="dimmed">{selected.tips}</Text>
+            <Button onClick={() => setOpenId(null)}>Done</Button>
+            <Button variant="subtle" onClick={() => navigate('/on-the-way')}>
               Back to On the Way
-            </button>
-          </div>
-        </div>
-      ) : null}
-    </div>
+            </Button>
+          </Stack>
+        ) : null}
+      </Drawer>
+    </Stack>
   )
 }
 
 function Info({ label, value }: { label: string; value: string }) {
   return (
-    <div className="profile-row">
-      <div className="label">{label}</div>
-      <div className="value">{value}</div>
+    <div>
+      <Text size="sm" c="dimmed">
+        {label}
+      </Text>
+      <Text fw={700}>{value}</Text>
     </div>
   )
 }

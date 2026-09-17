@@ -146,7 +146,7 @@ export function AppRouter() {
           }
         />
         <Route
-          path="/borders/article/:articleId"
+          path="/borders/:articleId"
           element={
             <RequireAuth>
               <BorderArticlePage />

@@ -25,7 +25,7 @@ npm run preview
 
 ## Deploy (GitHub Pages)
 
-Repo is configured with `base: '/dtp-webapp/'`.
+Repo is configured with `base: '/dtp-webapp/'`. The `gh-pages` branch is already published from CI/agent deploys.
 
 ```bash
 npm run deploy
@@ -33,7 +33,11 @@ npm run deploy
 
 Or push to `main` / this branch and use the GitHub Action in `.github/workflows/deploy-pages.yml`.
 
-Live site (after Pages is enabled): https://atulkhatri.github.io/dtp-webapp/
+**One-time setup (needed for the lasting public URL):** GitHub → repo **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `gh-pages` / `/ (root)` → Save.**
+
+Then open: https://atulkhatri.github.io/dtp-webapp/
+
+Until Pages is enabled, you can also run `npm run build && npm run preview` locally, or use a temporary tunnel to the preview port.
 
 ## Stack
 

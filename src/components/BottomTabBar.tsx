@@ -1,55 +1,51 @@
+import { Group, Stack, Text, UnstyledButton } from '@mantine/core'
 import { NavLink } from 'react-router-dom'
+import { IconBook, IconBorders, IconHome, IconLuggage, IconUser } from './icons'
 
 const tabs = [
-  { to: '/borders', label: 'Borders', icon: '🛂' },
-  { to: '/stays', label: 'Stays', icon: '🏠' },
-  { to: '/on-the-way', label: 'On the Way', icon: '🧳' },
-  { to: '/explore', label: 'Explore', icon: '📖' },
-  { to: '/profile', label: 'Profile', icon: '👤' },
+  { to: '/borders', label: 'Borders', Icon: IconBorders },
+  { to: '/stays', label: 'Stays', Icon: IconHome },
+  { to: '/on-the-way', label: 'On the Way', Icon: IconLuggage },
+  { to: '/explore', label: 'Explore', Icon: IconBook },
+  { to: '/profile', label: 'Profile', Icon: IconUser },
 ]
 
 export function BottomTabBar() {
   return (
-    <nav
-      aria-label="Main"
+    <Group
+      gap={0}
+      grow
+      px={4}
       style={{
         position: 'fixed',
         left: '50%',
         transform: 'translateX(-50%)',
         bottom: 0,
         width: '100%',
-        maxWidth: 'var(--shell-max)',
-        height: 'calc(var(--tab-h) + var(--safe-bottom))',
-        paddingBottom: 'var(--safe-bottom)',
+        maxWidth: 430,
+        height: 64,
+        paddingBottom: 'env(safe-area-inset-bottom, 0px)',
         background: '#fff',
-        borderTop: '1px solid var(--color-border)',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(5, 1fr)',
+        borderTop: '1px solid var(--mantine-color-gray-2)',
         zIndex: 30,
       }}
     >
-      {tabs.map((tab) => (
-        <NavLink
-          key={tab.to}
-          to={tab.to}
-          style={({ isActive }) => ({
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 2,
-            textDecoration: 'none',
-            color: isActive ? 'var(--color-primary)' : 'var(--color-text-muted)',
-            fontSize: '0.68rem',
-            fontWeight: 700,
-          })}
-        >
-          <span style={{ fontSize: '1.15rem', lineHeight: 1 }} aria-hidden>
-            {tab.icon}
-          </span>
-          {tab.label}
+      {tabs.map(({ to, label, Icon }) => (
+        <NavLink key={to} to={to} style={{ textDecoration: 'none', color: 'inherit' }}>
+          {({ isActive }) => (
+            <UnstyledButton w="100%" py={6}>
+              <Stack gap={2} align="center">
+                <Text c={isActive ? 'dtp' : 'gray.5'} style={{ display: 'flex' }}>
+                  <Icon active={isActive} />
+                </Text>
+                <Text size="10px" fw={700} c={isActive ? 'dtp' : 'gray.5'} ta="center" lh={1.1}>
+                  {label}
+                </Text>
+              </Stack>
+            </UnstyledButton>
+          )}
         </NavLink>
       ))}
-    </nav>
+    </Group>
   )
 }

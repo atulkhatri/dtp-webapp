@@ -1,9 +1,10 @@
+import { Button, Group, Image, Select, Stack, Text, TextInput } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../app/AuthContext'
 import { dataClient } from '../data/client'
 import type { QuestionnaireOptions, UserProfile } from '../data/types'
-import { Copyright, Header } from '../components/Header'
+import { AppHeader, Copyright } from '../components/Header'
 
 export function QuestionnairePage() {
   const { user, completeQuestionnaire, skipQuestionnaire } = useAuth()
@@ -19,36 +20,53 @@ export function QuestionnairePage() {
     })
   }, [user])
 
-  if (!options || !form) return <div className="loading">Loading…</div>
+  if (!options || !form) return <Text p="xl">Loading…</Text>
 
   if (step === 'intro') {
     return (
-      <div className="page">
-        <Header title="Questionnaire" />
-        <div className="hero-block">
-          <img
+      <Stack gap={0}>
+        <AppHeader title="Questionnaire" />
+        <div style={{ position: 'relative' }}>
+          <Image
             src="https://images.unsplash.com/photo-1488646953015-cd6cf9984c85?w=900&q=80"
-            alt="Travel collage"
+            alt="Travel"
+            h={220}
+            fit="cover"
           />
-          <div className="overlay">Your end-to-end journey starts here!</div>
-        </div>
-        <h2 className="h1">Let&apos;s create your digital profile to facilitate travelling experiences</h2>
-        <div className="btn-row" style={{ marginTop: 16 }}>
-          <button
-            className="btn btn-secondary"
-            onClick={async () => {
-              await skipQuestionnaire()
-              navigate('/borders')
+          <Text
+            fw={800}
+            size="lg"
+            c="white"
+            style={{
+              position: 'absolute',
+              left: 16,
+              right: 16,
+              bottom: 16,
+              textShadow: '0 2px 10px rgba(0,0,0,.45)',
             }}
           >
-            Later
-          </button>
-          <button className="btn btn-primary" onClick={() => setStep('form')}>
-            Start
-          </button>
+            Your end-to-end journey starts here!
+          </Text>
         </div>
-        <Copyright />
-      </div>
+        <Stack gap="md" p="md">
+          <Text fw={800} size="lg">
+            Let&apos;s create your digital profile to facilitate travelling experiences
+          </Text>
+          <Group grow>
+            <Button
+              variant="light"
+              onClick={async () => {
+                await skipQuestionnaire()
+                navigate('/borders')
+              }}
+            >
+              Later
+            </Button>
+            <Button onClick={() => setStep('form')}>Start</Button>
+          </Group>
+          <Copyright />
+        </Stack>
+      </Stack>
     )
   }
 
@@ -57,75 +75,73 @@ export function QuestionnairePage() {
   }
 
   return (
-    <div className="page">
-      <Header title="Questionnaire" showBack />
+    <Stack gap={0}>
+      <AppHeader title="Questionnaire" showBack />
       <form
-        className="stack"
         onSubmit={(e) => {
           e.preventDefault()
           completeQuestionnaire(form)
           navigate('/borders')
         }}
       >
-        <Field label="Full name">
-          <input className="field" value={form.name} onChange={(e) => update('name', e.target.value)} required />
-        </Field>
-        <Field label="Email">
-          <input className="field" type="email" value={form.email} onChange={(e) => update('email', e.target.value)} required />
-        </Field>
-        <Field label="Gender">
-          <Select value={form.gender} options={options.genders} onChange={(v) => update('gender', v)} />
-        </Field>
-        <Field label="Occupation">
-          <input className="field" value={form.occupation} onChange={(e) => update('occupation', e.target.value)} />
-        </Field>
-        <Field label="Country of residence">
-          <Select value={form.countryOfResidence} options={options.countries} onChange={(v) => update('countryOfResidence', v)} />
-        </Field>
-        <Field label="Origin">
-          <Select value={form.origin} options={options.countries} onChange={(v) => update('origin', v)} />
-        </Field>
-        <Field label="Destination">
-          <Select value={form.destination} options={options.destinations} onChange={(v) => update('destination', v)} />
-        </Field>
-        <Field label="Travel companions">
-          <Select value={form.companions} options={options.companions} onChange={(v) => update('companions', v)} />
-        </Field>
-        <Field label="Travel means">
-          <Select value={form.travelMeans} options={options.travelMeans} onChange={(v) => update('travelMeans', v)} />
-        </Field>
-        <Field label="Preferred travel type">
-          <Select value={form.preferredTravelType} options={options.travelTypes} onChange={(v) => update('preferredTravelType', v)} />
-        </Field>
-        <Field label="Vaccination status">
-          <Select value={form.vaccinationStatus} options={options.vaccinationOptions} onChange={(v) => update('vaccinationStatus', v)} />
-        </Field>
-        <button type="submit" className="btn btn-primary btn-block" style={{ marginTop: 8 }}>
-          Create Profile
-        </button>
+        <Stack gap="sm" p="md" pb="xl">
+          <TextInput label="Full name" value={form.name} onChange={(e) => update('name', e.currentTarget.value)} required />
+          <TextInput
+            label="Email"
+            type="email"
+            value={form.email}
+            onChange={(e) => update('email', e.currentTarget.value)}
+            required
+          />
+          <Select label="Gender" data={options.genders} value={form.gender} onChange={(v) => v && update('gender', v)} />
+          <TextInput
+            label="Occupation"
+            value={form.occupation}
+            onChange={(e) => update('occupation', e.currentTarget.value)}
+          />
+          <Select
+            label="Country of residence"
+            data={options.countries}
+            value={form.countryOfResidence}
+            onChange={(v) => v && update('countryOfResidence', v)}
+          />
+          <Select label="Origin" data={options.countries} value={form.origin} onChange={(v) => v && update('origin', v)} />
+          <Select
+            label="Destination"
+            data={options.destinations}
+            value={form.destination}
+            onChange={(v) => v && update('destination', v)}
+          />
+          <Select
+            label="Travel companions"
+            data={options.companions}
+            value={form.companions}
+            onChange={(v) => v && update('companions', v)}
+          />
+          <Select
+            label="Travel means"
+            data={options.travelMeans}
+            value={form.travelMeans}
+            onChange={(v) => v && update('travelMeans', v)}
+          />
+          <Select
+            label="Preferred travel type"
+            data={options.travelTypes}
+            value={form.preferredTravelType}
+            onChange={(v) => v && update('preferredTravelType', v)}
+          />
+          <Select
+            label="Vaccination status"
+            data={options.vaccinationOptions}
+            value={form.vaccinationStatus}
+            onChange={(v) => v && update('vaccinationStatus', v)}
+          />
+          <Button type="submit" fullWidth mt="sm">
+            Create Profile
+          </Button>
+          <Copyright />
+        </Stack>
       </form>
-      <Copyright />
-    </div>
-  )
-}
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <label className="label">{label}</label>
-      {children}
-    </div>
-  )
-}
-
-function Select({ value, options, onChange }: { value: string; options: string[]; onChange: (v: string) => void }) {
-  return (
-    <select className="field select" value={value} onChange={(e) => onChange(e.target.value)}>
-      {options.map((opt) => (
-        <option key={opt} value={opt}>
-          {opt}
-        </option>
-      ))}
-    </select>
+    </Stack>
   )
 }

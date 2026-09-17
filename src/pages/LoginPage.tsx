@@ -1,23 +1,35 @@
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Group,
+  Stack,
+  Text,
+  TextInput,
+  PasswordInput,
+} from '@mantine/core'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../app/AuthContext'
-import { useToast } from '../app/ToastContext'
-import { BrandMark, Copyright, Header } from '../components/Header'
-import type { SessionRole } from '../data/session'
+import { notifications } from '@mantine/notifications'
+import { AppHeader, BrandMark } from '../components/Header'
+import { DEMO_EMAIL, DEMO_PASSWORD, type SessionRole } from '../data/session'
 
 export function LoginPage() {
   const { login } = useAuth()
-  const { toast } = useToast()
   const navigate = useNavigate()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState(DEMO_EMAIL)
+  const [password, setPassword] = useState(DEMO_PASSWORD)
   const [role, setRole] = useState<SessionRole>('tourist')
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
+    setLoading(true)
     const result = await login(email, password, role)
+    setLoading(false)
     if (!result.ok) {
       setError(result.error ?? 'Login failed')
       return
@@ -27,106 +39,77 @@ export function LoginPage() {
   }
 
   return (
-    <div className="page">
-      <Header title="Log In" />
+    <Stack gap="md" p="md" pb="xl">
+      <AppHeader title="Log In" />
       <BrandMark large />
-      <form className="stack" onSubmit={onSubmit}>
-        <div>
-          <label className="label" htmlFor="email">
-            Email
-          </label>
-          <input
-            id="email"
-            className="field"
-            type="email"
+      <form onSubmit={onSubmit}>
+        <Stack gap="md">
+          <TextInput
+            label="Email"
             placeholder="Enter your email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete="username"
+            onChange={(e) => setEmail(e.currentTarget.value)}
+            type="email"
             required
+            autoComplete="username"
           />
-        </div>
-        <div>
-          <label className="label" htmlFor="password">
-            Password
-          </label>
-          <input
-            id="password"
-            className="field"
-            type="password"
+          <PasswordInput
+            label="Password"
             placeholder="Enter your password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="current-password"
+            onChange={(e) => setPassword(e.currentTarget.value)}
             required
+            autoComplete="current-password"
           />
-        </div>
-        {error ? <p style={{ color: 'var(--color-danger)', margin: 0 }}>{error}</p> : null}
-        <div className="btn-row">
-          <Link to="/signup" className="btn btn-primary" style={{ textDecoration: 'none' }}>
-            Sign Up
-          </Link>
-          <button type="submit" className="btn btn-primary">
-            Log In
-          </button>
-        </div>
-        <div className="row" style={{ gap: 24, marginTop: 4 }}>
-          <label className="checkbox">
-            <input
-              type="checkbox"
+          {error ? <Alert color="red">{error}</Alert> : null}
+          <Group grow>
+            <Button component={Link} to="/signup" variant="filled">
+              Sign Up
+            </Button>
+            <Button type="submit" loading={loading}>
+              Log In
+            </Button>
+          </Group>
+          <Group gap="xl">
+            <Checkbox
+              label="Tourist"
               checked={role === 'tourist'}
               onChange={() => setRole('tourist')}
             />
-            Tourist
-          </label>
-          <label className="checkbox">
-            <input
-              type="checkbox"
+            <Checkbox
+              label="Business"
               checked={role === 'business'}
               onChange={() => setRole('business')}
             />
-            Business
-          </label>
-        </div>
-        <button
-          type="button"
-          className="btn btn-ghost"
-          style={{ justifyContent: 'flex-start', paddingLeft: 0 }}
-          onClick={() => toast('Contact support at hello@dtpsupport.com')}
-        >
-          Forgot password?
-        </button>
-        <div className="stack" style={{ marginTop: 8 }}>
-          <div className="btn-row">
-            <button type="button" className="btn btn-secondary" onClick={() => toast('Coming soon')}>
-              Continue with Facebook
-            </button>
-            <button type="button" className="btn btn-secondary" onClick={() => toast('Coming soon')}>
-              Continue with Google
-            </button>
-          </div>
-          <button type="button" className="btn btn-secondary btn-block" onClick={() => toast('Coming soon')}>
+          </Group>
+          <Button
+            variant="transparent"
+            color="dtp"
+            justify="flex-start"
+            px={0}
+            onClick={() => notifications.show({ message: 'Contact support at hello@dtpsupport.com' })}
+          >
+            Forgot password?
+          </Button>
+          <Group grow>
+            <Button variant="light" onClick={() => notifications.show({ message: 'Coming soon' })}>
+              Facebook
+            </Button>
+            <Button variant="light" onClick={() => notifications.show({ message: 'Coming soon' })}>
+              Google
+            </Button>
+          </Group>
+          <Button variant="light" fullWidth onClick={() => notifications.show({ message: 'Coming soon' })}>
             Sign In with Apple
-          </button>
-        </div>
+          </Button>
+        </Stack>
       </form>
-      <button
-        type="button"
-        className="btn btn-secondary btn-block"
-        style={{ marginTop: 16 }}
-        onClick={() => {
-          setEmail('maya.chen@example.com')
-          setPassword('travel2026')
-          setRole('tourist')
-          setError('')
-        }}
-      >
-        Fill demo credentials
-      </button>
-      <p className="tiny" style={{ marginTop: 12, textAlign: 'center' }}>
-        Demo: maya.chen@example.com / travel2026
-      </p>
-      <Copyright />
-    </div>
+      <Text size="xs" c="dimmed" ta="center">
+        Demo credentials are prefilled — tap Log In to continue.
+      </Text>
+      <Text size="xs" c="dimmed" ta="center">
+        © 2026 DTP Support Services Corp.
+      </Text>
+    </Stack>
   )
 }

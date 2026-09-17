@@ -26,23 +26,16 @@ export interface QuestionnaireOptions {
   vaccinationOptions: string[]
 }
 
-export interface BorderLink {
+export interface BorderItem {
   id: string
   title: string
+  imageUrl: string
+  summary: string
   body: string
 }
 
-export interface BorderSection {
-  id: string
-  title: string
-  links: BorderLink[]
-}
-
 export interface BordersData {
-  country: string
-  flagEmoji: string
-  bannerTitle: string
-  sections: BorderSection[]
+  items: BorderItem[]
 }
 
 export interface Stay {

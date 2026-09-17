@@ -1,3 +1,4 @@
+import { Button, Divider, Drawer, Stack, Text } from '@mantine/core'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../app/AuthContext'
 
@@ -17,69 +18,55 @@ interface MenuDrawerProps {
 
 export function MenuDrawer({ open, onClose }: MenuDrawerProps) {
   const { user, logout } = useAuth()
-  if (!open) return null
 
   return (
-    <div className="sheet-backdrop" onClick={onClose} role="presentation">
-      <aside
-        role="dialog"
-        aria-label="Menu"
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          position: 'absolute',
-          left: 'max(0px, calc(50% - var(--shell-max) / 2))',
-          top: 0,
-          width: 'min(82vw, 340px)',
-          height: '100%',
-          background: '#fff',
-          boxShadow: 'var(--shadow-soft)',
-          padding: '28px 20px',
-          display: 'flex',
-          flexDirection: 'column',
-          borderRadius: '0 16px 16px 0',
-        }}
-      >
-        <button
-          className="btn btn-ghost"
-          style={{ alignSelf: 'flex-start', marginBottom: 12 }}
-          onClick={onClose}
-          aria-label="Close menu"
-        >
-          ✕
-        </button>
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ fontWeight: 800, fontSize: '1.15rem' }}>{user?.name ?? 'Traveller'}</div>
-          <div className="muted">{user?.email}</div>
-        </div>
-        <nav className="stack" style={{ gap: 4, flex: 1 }}>
-          {items.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              onClick={onClose}
-              style={{
-                padding: '14px 4px',
-                textDecoration: 'none',
-                color: 'var(--color-text)',
-                fontWeight: 700,
-                borderBottom: '1px solid var(--color-border)',
-              }}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-        <button
-          className="btn btn-secondary btn-block"
-          style={{ marginTop: 16 }}
+    <Drawer
+      opened={open}
+      onClose={onClose}
+      title={
+        <Stack gap={2}>
+          <Text fw={800} size="lg">
+            {user?.name ?? 'Traveller'}
+          </Text>
+          <Text size="sm" c="dimmed">
+            {user?.email}
+          </Text>
+        </Stack>
+      }
+      position="left"
+      size="85%"
+      overlayProps={{ backgroundOpacity: 0.35, blur: 2 }}
+      styles={{
+        content: { maxWidth: 360 },
+      }}
+    >
+      <Stack gap="xs" mt="md">
+        {items.map((item) => (
+          <Button
+            key={item.to}
+            component={Link}
+            to={item.to}
+            variant="subtle"
+            color="gray"
+            justify="flex-start"
+            onClick={onClose}
+            styles={{ root: { fontWeight: 700 } }}
+          >
+            {item.label}
+          </Button>
+        ))}
+        <Divider my="sm" />
+        <Button
+          variant="light"
+          color="dtp"
           onClick={() => {
             onClose()
             logout()
           }}
         >
           Sign Out
-        </button>
-      </aside>
-    </div>
+        </Button>
+      </Stack>
+    </Drawer>
   )
 }

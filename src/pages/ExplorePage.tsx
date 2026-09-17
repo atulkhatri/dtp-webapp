@@ -1,9 +1,21 @@
+import {
+  ActionIcon,
+  Badge,
+  Button,
+  Card,
+  Chip,
+  Group,
+  Image,
+  Stack,
+  Text,
+  TextInput,
+} from '@mantine/core'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../app/AuthContext'
 import { dataClient } from '../data/client'
 import type { ExplorePlace } from '../data/types'
-import { Header } from '../components/Header'
+import { AppHeader } from '../components/Header'
 import { MapView } from '../components/MapView'
 
 interface ExplorePageProps {
@@ -38,68 +50,89 @@ export function ExplorePage({ onMenu }: ExplorePageProps) {
   }, [places, category, query])
 
   return (
-    <div className="page with-tabs with-header">
-      <Header title="Explore" showMenu onMenu={onMenu} />
-      <div className="hero-block" style={{ minHeight: 140 }}>
-        <img
+    <Stack gap={0}>
+      <AppHeader title="Explore" showMenu onMenu={onMenu} />
+      <div style={{ position: 'relative' }}>
+        <Image
           src="https://images.unsplash.com/photo-1559511260-66a654ae982a?w=900&q=80"
-          alt="Vancouver waterfront"
-          style={{ height: 160 }}
+          alt="Vancouver"
+          h={160}
+          fit="cover"
         />
-        <div className="overlay">Discover the best of Vancouver</div>
+        <Text
+          fw={800}
+          size="lg"
+          c="white"
+          style={{
+            position: 'absolute',
+            left: 16,
+            bottom: 14,
+            textShadow: '0 2px 10px rgba(0,0,0,.45)',
+          }}
+        >
+          Discover the best of Vancouver
+        </Text>
       </div>
-      <input
-        className="field soft"
-        placeholder="Search nearby"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <div className="row wrap" style={{ marginTop: 12, gap: 8 }}>
-        {categories.map((c) => (
-          <button key={c} className={`chip ${category === c ? 'active' : ''}`} onClick={() => setCategory(c)}>
-            {c}
-          </button>
-        ))}
-      </div>
-      <div className="row between" style={{ marginTop: 12 }}>
-        <span className="muted">{filtered.length} places</span>
-        <button className="btn btn-secondary" onClick={() => navigate('/explore/map')}>
-          View Map
-        </button>
-      </div>
+      <Stack gap="md" p="md" pb={100}>
+        <TextInput placeholder="Search nearby" value={query} onChange={(e) => setQuery(e.currentTarget.value)} />
+        <Chip.Group multiple={false} value={category} onChange={(v) => setCategory(String(v))}>
+          <Group gap="xs">
+            {categories.map((c) => (
+              <Chip key={c} value={c} color="dtp" variant="filled">
+                {c}
+              </Chip>
+            ))}
+          </Group>
+        </Chip.Group>
+        <Group justify="space-between">
+          <Text size="sm" c="dimmed">
+            {filtered.length} places
+          </Text>
+          <Button variant="light" size="compact-md" onClick={() => navigate('/explore/map')}>
+            View Map
+          </Button>
+        </Group>
 
-      {filtered.length === 0 ? (
-        <div className="empty">
-          <p>No places match your search.</p>
-          <button
-            className="btn btn-primary"
-            onClick={() => {
-              setQuery('')
-              setCategory('All')
-            }}
-          >
-            Clear filters
-          </button>
-        </div>
-      ) : (
-        <div>
-          {filtered.map((place) => (
-            <Link key={place.id} to={`/explore/${place.id}`} className="explore-card" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <div className="card-media">
-                <img src={place.imageUrl} alt={place.name} />
-              </div>
-              <div>
-                <div style={{ fontWeight: 700 }}>{place.name}</div>
-                <div className="tiny">{place.category}</div>
-                <div className="muted" style={{ fontSize: '0.85rem' }}>
-                  {place.address}
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
-    </div>
+        {filtered.length === 0 ? (
+          <Stack align="center" py="xl">
+            <Text c="dimmed">No places match your search.</Text>
+            <Button
+              onClick={() => {
+                setQuery('')
+                setCategory('All')
+              }}
+            >
+              Clear filters
+            </Button>
+          </Stack>
+        ) : (
+          filtered.map((place) => (
+            <Card
+              key={place.id}
+              component={Link}
+              to={`/explore/${place.id}`}
+              padding="sm"
+              radius="md"
+              withBorder
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <Group wrap="nowrap" align="flex-start">
+                <Image src={place.imageUrl} w={88} h={72} radius="md" alt={place.name} />
+                <Stack gap={2} style={{ flex: 1 }}>
+                  <Text fw={700}>{place.name}</Text>
+                  <Text size="xs" c="dimmed">
+                    {place.category}
+                  </Text>
+                  <Text size="sm" c="dimmed" lineClamp={2}>
+                    {place.address}
+                  </Text>
+                </Stack>
+              </Group>
+            </Card>
+          ))
+        )}
+      </Stack>
+    </Stack>
   )
 }
 
@@ -112,21 +145,19 @@ export function ExploreMapPage() {
   }, [])
 
   return (
-    <div className="page with-tabs with-header">
-      <Header title="Explore Map" showBack backTo="/explore" />
-      <div style={{ height: 420 }}>
+    <Stack gap={0}>
+      <AppHeader title="Explore Map" showBack backTo="/explore" />
+      <Stack p="md" pb={100}>
         <MapView
           pins={places.map((p) => ({ id: p.id, name: p.name, lat: p.lat, lng: p.lng }))}
           onSelect={(id) => navigate(`/explore/${id}`)}
           height={420}
         />
-      </div>
-      <div className="fab-row">
-        <button className="fab" onClick={() => navigate('/explore')} aria-label="View list">
-          ☰
-        </button>
-      </div>
-    </div>
+        <Button variant="light" onClick={() => navigate('/explore')}>
+          View List
+        </Button>
+      </Stack>
+    </Stack>
   )
 }
 
@@ -139,48 +170,47 @@ export function PlaceDetailPage() {
     void dataClient.getExplore().then((list) => setPlace(list.find((p) => p.id === id) ?? null))
   }, [id])
 
-  if (!place) return <div className="loading">Loading…</div>
+  if (!place) return <Text p="xl">Loading…</Text>
   const fav = favorites.places.includes(place.id)
   const mapsUrl = `https://www.openstreetmap.org/?mlat=${place.lat}&mlon=${place.lng}#map=16/${place.lat}/${place.lng}`
 
   return (
-    <div className="page with-tabs with-header">
-      <Header title={place.name} showBack backTo="/explore" />
-      <div className="detail-hero">
-        <img src={place.imageUrl} alt={place.name} />
-        <div className="caption">
-          <div style={{ fontWeight: 800, fontSize: '1.15rem' }}>{place.name}</div>
+    <Stack gap={0}>
+      <AppHeader title={place.name} showBack backTo="/explore" />
+      <Image src={place.imageUrl} h={210} fit="cover" alt={place.name} />
+      <Stack gap="md" p="md" pb={100}>
+        <Group gap="xs">
+          {place.categories
+            .filter((c) => c !== 'All')
+            .map((c) => (
+              <Badge key={c}>{c}</Badge>
+            ))}
+        </Group>
+        <Group justify="space-between">
+          <Text size="sm" c="dimmed">
+            Favorite
+          </Text>
+          <ActionIcon variant="subtle" color="red" size="lg" onClick={() => toggleFav('places', place.id)}>
+            <Text size="xl">{fav ? '♥' : '♡'}</Text>
+          </ActionIcon>
+        </Group>
+        <Text style={{ lineHeight: 1.55 }}>{place.description}</Text>
+        <div>
+          <Text size="sm" c="dimmed">
+            Address
+          </Text>
+          <Text fw={700}>{place.address}</Text>
         </div>
-      </div>
-      <div className="row wrap" style={{ gap: 8, marginBottom: 8 }}>
-        {place.categories
-          .filter((c) => c !== 'All')
-          .map((c) => (
-            <span key={c} className="chip active">
-              {c}
-            </span>
-          ))}
-      </div>
-      <div className="row between">
-        <span className="label" style={{ margin: 0 }}>
-          Favorite
-        </span>
-        <button className="heart-outline" onClick={() => toggleFav('places', place.id)}>
-          {fav ? '♥' : '♡'}
-        </button>
-      </div>
-      <p style={{ lineHeight: 1.5 }}>{place.description}</p>
-      <div className="profile-row">
-        <div className="label">Address</div>
-        <div>{place.address}</div>
-      </div>
-      <div className="profile-row">
-        <div className="label">Hours</div>
-        <div>{place.hours}</div>
-      </div>
-      <a className="btn btn-primary btn-block" href={mapsUrl} target="_blank" rel="noreferrer" style={{ textDecoration: 'none', marginTop: 12 }}>
-        Open in map
-      </a>
-    </div>
+        <div>
+          <Text size="sm" c="dimmed">
+            Hours
+          </Text>
+          <Text fw={700}>{place.hours}</Text>
+        </div>
+        <Button component="a" href={mapsUrl} target="_blank" rel="noreferrer">
+          Open in map
+        </Button>
+      </Stack>
+    </Stack>
   )
 }

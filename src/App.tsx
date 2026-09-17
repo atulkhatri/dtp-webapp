@@ -1,17 +1,24 @@
+import '@mantine/core/styles.css'
+import '@mantine/notifications/styles.css'
+import { MantineProvider } from '@mantine/core'
+import { Notifications } from '@mantine/notifications'
 import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './app/AuthContext'
-import { ToastProvider } from './app/ToastContext'
 import { AppRouter } from './app/AppRouter'
-import './styles/tokens.css'
+import { dtpTheme } from './styles/theme'
+import './styles/app.css'
 
 export default function App() {
+  const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/'
+
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '') || '/'}>
-      <AuthProvider>
-        <ToastProvider>
+    <MantineProvider theme={dtpTheme} defaultColorScheme="light">
+      <Notifications position="bottom-center" zIndex={1000} />
+      <BrowserRouter basename={basename}>
+        <AuthProvider>
           <AppRouter />
-        </ToastProvider>
-      </AuthProvider>
-    </BrowserRouter>
+        </AuthProvider>
+      </BrowserRouter>
+    </MantineProvider>
   )
 }

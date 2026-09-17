@@ -1,13 +1,22 @@
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Group,
+  Stack,
+  Text,
+  TextInput,
+  PasswordInput,
+} from '@mantine/core'
+import { notifications } from '@mantine/notifications'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../app/AuthContext'
-import { useToast } from '../app/ToastContext'
-import { BrandMark, Copyright, Header } from '../components/Header'
+import { AppHeader, BrandMark, Copyright } from '../components/Header'
 import type { SessionRole } from '../data/session'
 
 export function SignUpPage() {
   const { signup } = useAuth()
-  const { toast } = useToast()
   const navigate = useNavigate()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -22,60 +31,45 @@ export function SignUpPage() {
       setError(result.error ?? 'Sign up failed')
       return
     }
-    toast('Account created')
+    notifications.show({ message: 'Account created', color: 'dtp' })
     if (role === 'business') navigate('/business-coming-soon')
     else navigate('/questionnaire')
   }
 
   return (
-    <div className="page">
-      <Header title="Sign Up" showBack backTo="/login" />
+    <Stack gap="md" p="md" pb="xl">
+      <AppHeader title="Sign Up" showBack backTo="/login" />
       <BrandMark />
-      <form className="stack" onSubmit={onSubmit}>
-        <div>
-          <label className="label" htmlFor="name">
-            Name
-          </label>
-          <input id="name" className="field" value={name} onChange={(e) => setName(e.target.value)} required />
-        </div>
-        <div>
-          <label className="label" htmlFor="email">
-            Email
-          </label>
-          <input id="email" className="field" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        </div>
-        <div>
-          <label className="label" htmlFor="password">
-            Password
-          </label>
-          <input
-            id="password"
-            className="field"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+      <form onSubmit={onSubmit}>
+        <Stack gap="md">
+          <TextInput label="Name" value={name} onChange={(e) => setName(e.currentTarget.value)} required />
+          <TextInput
+            label="Email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.currentTarget.value)}
             required
           />
-        </div>
-        <div className="row" style={{ gap: 24 }}>
-          <label className="checkbox">
-            <input type="checkbox" checked={role === 'tourist'} onChange={() => setRole('tourist')} />
-            Tourist
-          </label>
-          <label className="checkbox">
-            <input type="checkbox" checked={role === 'business'} onChange={() => setRole('business')} />
-            Business
-          </label>
-        </div>
-        {error ? <p style={{ color: 'var(--color-danger)', margin: 0 }}>{error}</p> : null}
-        <button type="submit" className="btn btn-primary btn-block">
-          Create account
-        </button>
-        <p className="muted" style={{ textAlign: 'center' }}>
-          Already have an account? <Link to="/login">Log In</Link>
-        </p>
+          <PasswordInput
+            label="Password"
+            value={password}
+            onChange={(e) => setPassword(e.currentTarget.value)}
+            required
+          />
+          <Group gap="xl">
+            <Checkbox label="Tourist" checked={role === 'tourist'} onChange={() => setRole('tourist')} />
+            <Checkbox label="Business" checked={role === 'business'} onChange={() => setRole('business')} />
+          </Group>
+          {error ? <Alert color="red">{error}</Alert> : null}
+          <Button type="submit" fullWidth>
+            Create account
+          </Button>
+          <Text size="sm" c="dimmed" ta="center">
+            Already have an account? <Link to="/login">Log In</Link>
+          </Text>
+        </Stack>
       </form>
       <Copyright />
-    </div>
+    </Stack>
   )
 }

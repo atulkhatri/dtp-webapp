@@ -1,9 +1,10 @@
+import { Card, Group, Image, SimpleGrid, Stack, Text, Title } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../app/AuthContext'
 import { dataClient } from '../data/client'
 import type { ContentData, ExplorePlace, Review, Stay } from '../data/types'
-import { Header } from '../components/Header'
+import { AppHeader } from '../components/Header'
 
 export function MyPlacesPage() {
   const { favorites, seedFavorites } = useAuth()
@@ -24,42 +25,44 @@ export function MyPlacesPage() {
   const favPlaces = places.filter((p) => favorites.places.includes(p.id))
 
   return (
-    <div className="page with-tabs with-header">
-      <Header title="My Places" showBack backTo="/profile" />
-      <h2 className="h2">Stays</h2>
-      {favStays.length === 0 ? (
-        <p className="muted">No favorited stays yet.</p>
-      ) : (
-        <div className="grid-2">
-          {favStays.map((stay) => (
-            <Link key={stay.id} to={`/stays/${stay.id}`} className="stay-card" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <div className="card-media">
-                <img src={stay.imageUrl} alt={stay.name} />
-              </div>
-              <div className="name">{stay.name}</div>
-            </Link>
-          ))}
-        </div>
-      )}
-      <h2 className="h2" style={{ marginTop: 20 }}>
-        Explore
-      </h2>
-      {favPlaces.length === 0 ? (
-        <p className="muted">No favorited places yet.</p>
-      ) : (
-        favPlaces.map((place) => (
-          <Link key={place.id} to={`/explore/${place.id}`} className="explore-card" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div className="card-media">
-              <img src={place.imageUrl} alt={place.name} />
-            </div>
-            <div>
-              <div style={{ fontWeight: 700 }}>{place.name}</div>
-              <div className="muted">{place.address}</div>
-            </div>
-          </Link>
-        ))
-      )}
-    </div>
+    <Stack gap={0}>
+      <AppHeader title="My Places" showBack backTo="/profile" />
+      <Stack gap="md" p="md" pb={100}>
+        <Title order={4}>Stays</Title>
+        {favStays.length === 0 ? (
+          <Text c="dimmed">No favorited stays yet.</Text>
+        ) : (
+          <SimpleGrid cols={2}>
+            {favStays.map((stay) => (
+              <Card key={stay.id} component={Link} to={`/stays/${stay.id}`} padding="xs" withBorder style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Image src={stay.imageUrl} h={90} alt={stay.name} />
+                <Text fw={700} size="sm" mt={6}>
+                  {stay.name}
+                </Text>
+              </Card>
+            ))}
+          </SimpleGrid>
+        )}
+        <Title order={4}>Explore</Title>
+        {favPlaces.length === 0 ? (
+          <Text c="dimmed">No favorited places yet.</Text>
+        ) : (
+          favPlaces.map((place) => (
+            <Card key={place.id} component={Link} to={`/explore/${place.id}`} padding="sm" withBorder style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Group wrap="nowrap">
+                <Image src={place.imageUrl} w={72} h={60} radius="md" alt={place.name} />
+                <div>
+                  <Text fw={700}>{place.name}</Text>
+                  <Text size="sm" c="dimmed">
+                    {place.address}
+                  </Text>
+                </div>
+              </Group>
+            </Card>
+          ))
+        )}
+      </Stack>
+    </Stack>
   )
 }
 
@@ -70,24 +73,32 @@ export function MyReviewsPage() {
     void dataClient.getReviews().then(setReviews)
   }, [])
 
-  if (!reviews) return <div className="loading">Loading…</div>
+  if (!reviews) return <Text p="xl">Loading…</Text>
 
   return (
-    <div className="page with-tabs with-header">
-      <Header title="My Reviews" showBack backTo="/profile" />
-      {reviews.length === 0 ? (
-        <div className="empty">No reviews yet.</div>
-      ) : (
-        reviews.map((r) => (
-          <article key={r.id} style={{ padding: '12px 0', borderBottom: '1px solid var(--color-border)' }}>
-            <div style={{ fontWeight: 800 }}>{r.placeName}</div>
-            <div className="tiny">{r.date}</div>
-            <div className="hearts">{'♥'.repeat(r.rating)}</div>
-            <p className="muted">{r.text}</p>
-          </article>
-        ))
-      )}
-    </div>
+    <Stack gap={0}>
+      <AppHeader title="My Reviews" showBack backTo="/profile" />
+      <Stack gap="md" p="md" pb={100}>
+        {reviews.length === 0 ? (
+          <Text c="dimmed" ta="center" py="xl">
+            No reviews yet.
+          </Text>
+        ) : (
+          reviews.map((r) => (
+            <Card key={r.id} padding="md" withBorder>
+              <Text fw={800}>{r.placeName}</Text>
+              <Text size="xs" c="dimmed">
+                {r.date}
+              </Text>
+              <Text c="dtp">{'♥'.repeat(r.rating)}</Text>
+              <Text size="sm" c="dimmed" mt={4}>
+                {r.text}
+              </Text>
+            </Card>
+          ))
+        )}
+      </Stack>
+    </Stack>
   )
 }
 
@@ -102,12 +113,14 @@ function ContentPage({
   useEffect(() => {
     void dataClient.getContent().then(setContent)
   }, [])
-  if (!content) return <div className="loading">Loading…</div>
+  if (!content) return <Text p="xl">Loading…</Text>
   return (
-    <div className="page with-tabs with-header">
-      <Header title={title} showBack backTo="/profile" />
-      {children(content)}
-    </div>
+    <Stack gap={0}>
+      <AppHeader title={title} showBack backTo="/profile" />
+      <Stack gap="md" p="md" pb={100}>
+        {children(content)}
+      </Stack>
+    </Stack>
   )
 }
 
@@ -116,16 +129,14 @@ export function ContactPage() {
     <ContentPage title="Contact Us">
       {(c) => (
         <>
-          <h1 className="h1">{c.contact.title}</h1>
-          <p className="muted">{c.contact.body}</p>
-          <p>
-            <a href={`mailto:${c.contact.email}`}>{c.contact.email}</a>
-          </p>
-          <p>
-            <a href={c.contact.website} target="_blank" rel="noreferrer">
-              {c.contact.website}
-            </a>
-          </p>
+          <Title order={3}>{c.contact.title}</Title>
+          <Text c="dimmed">{c.contact.body}</Text>
+          <Text component="a" href={`mailto:${c.contact.email}`} c="dtp">
+            {c.contact.email}
+          </Text>
+          <Text component="a" href={c.contact.website} target="_blank" rel="noreferrer" c="dtp">
+            {c.contact.website}
+          </Text>
         </>
       )}
     </ContentPage>
@@ -137,10 +148,10 @@ export function WorkWithUsPage() {
     <ContentPage title="Work with Us">
       {(c) => (
         <>
-          <h1 className="h1">{c.workWithUs.title}</h1>
-          <p className="muted" style={{ lineHeight: 1.55 }}>
+          <Title order={3}>{c.workWithUs.title}</Title>
+          <Text c="dimmed" style={{ lineHeight: 1.55 }}>
             {c.workWithUs.body}
-          </p>
+          </Text>
         </>
       )}
     </ContentPage>
@@ -152,12 +163,12 @@ export function SettingsPage() {
     <ContentPage title="Settings">
       {(c) => (
         <>
-          <h1 className="h1">{c.settings.title}</h1>
+          <Title order={3}>{c.settings.title}</Title>
           {c.settings.items.map((item) => (
-            <div key={item.id} className="profile-row row between">
-              <span>{item.label}</span>
-              <span className="muted">{item.value}</span>
-            </div>
+            <Group key={item.id} justify="space-between">
+              <Text>{item.label}</Text>
+              <Text c="dimmed">{item.value}</Text>
+            </Group>
           ))}
         </>
       )}
@@ -170,11 +181,13 @@ export function AboutPage() {
     <ContentPage title="About">
       {(c) => (
         <>
-          <h1 className="h1">{c.about.title}</h1>
-          <p className="muted" style={{ lineHeight: 1.55 }}>
+          <Title order={3}>{c.about.title}</Title>
+          <Text c="dimmed" style={{ lineHeight: 1.55 }}>
             {c.about.body}
-          </p>
-          <p className="tiny">{c.copyright}</p>
+          </Text>
+          <Text size="xs" c="dimmed">
+            {c.copyright}
+          </Text>
         </>
       )}
     </ContentPage>

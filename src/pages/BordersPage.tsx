@@ -1,8 +1,9 @@
+import { Image, Loader, Stack, Text, UnstyledButton } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { dataClient } from '../data/client'
 import type { BordersData } from '../data/types'
-import { Header } from '../components/Header'
+import { AppHeader } from '../components/Header'
 
 interface BordersPageProps {
   onMenu: () => void
@@ -15,56 +16,83 @@ export function BordersPage({ onMenu }: BordersPageProps) {
     void dataClient.getBorders().then(setData)
   }, [])
 
-  if (!data) return <div className="loading">Loading…</div>
+  if (!data) {
+    return (
+      <Stack align="center" py="xl">
+        <Loader color="dtp" />
+      </Stack>
+    )
+  }
 
   return (
-    <div className="page with-tabs with-header">
-      <Header title="Borders" showMenu onMenu={onMenu} />
-      <div className="banner">
-        <span style={{ marginRight: 8 }}>{data.flagEmoji}</span>
-        {data.bannerTitle}
-      </div>
-      {data.sections.map((section) => (
-        <section key={section.id} className="section-block">
-          <h2 className="h2">{section.title}</h2>
-          {section.links.map((link) => (
-            <Link key={link.id} className="list-link" to={`/borders/article/${link.id}`}>
-              {link.title}
-            </Link>
-          ))}
-        </section>
-      ))}
-    </div>
+    <Stack gap={0}>
+      <AppHeader title="Borders" showMenu onMenu={onMenu} />
+      <Stack gap="lg" px="md" pt="sm" pb={88}>
+        {data.items.map((item) => (
+          <UnstyledButton
+            key={item.id}
+            component={Link}
+            to={`/borders/${item.id}`}
+            style={{ display: 'block', width: '100%' }}
+          >
+            <Stack gap="xs">
+              <Image
+                src={item.imageUrl}
+                alt={item.title}
+                radius="md"
+                h={168}
+                fit="cover"
+                fallbackSrc="https://placehold.co/800x400/ebebfd/7879ff?text=DTP"
+              />
+              <Text fw={700} size="lg">
+                {item.title}
+              </Text>
+            </Stack>
+          </UnstyledButton>
+        ))}
+      </Stack>
+    </Stack>
   )
 }
 
 export function BorderArticlePage() {
   const { articleId } = useParams()
-  const [title, setTitle] = useState('')
-  const [body, setBody] = useState('')
+  const [item, setItem] = useState<BordersData['items'][number] | null>(null)
+  const [missing, setMissing] = useState(false)
 
   useEffect(() => {
     void dataClient.getBorders().then((data) => {
-      for (const section of data.sections) {
-        const found = section.links.find((l) => l.id === articleId)
-        if (found) {
-          setTitle(found.title)
-          setBody(found.body)
-          return
-        }
-      }
-      setTitle('Article')
-      setBody('Content not found.')
+      const found = data.items.find((i) => i.id === articleId) ?? null
+      setItem(found)
+      setMissing(!found)
     })
   }, [articleId])
 
+  if (!item && !missing) {
+    return (
+      <Stack align="center" py="xl">
+        <Loader color="dtp" />
+      </Stack>
+    )
+  }
+
   return (
-    <div className="page with-tabs with-header">
-      <Header title="Borders" showBack backTo="/borders" />
-      <h1 className="h1">{title}</h1>
-      <p className="muted" style={{ lineHeight: 1.55 }}>
-        {body}
-      </p>
-    </div>
+    <Stack gap={0}>
+      <AppHeader title="Borders" showBack backTo="/borders" />
+      <Stack gap="md" px="md" pt="sm" pb={88}>
+        {item ? (
+          <>
+            <Image src={item.imageUrl} alt={item.title} radius="md" h={200} fit="cover" />
+            <Text fw={800} size="xl">
+              {item.title}
+            </Text>
+            <Text c="dimmed">{item.summary}</Text>
+            <Text style={{ lineHeight: 1.6 }}>{item.body}</Text>
+          </>
+        ) : (
+          <Text>Content not found.</Text>
+        )}
+      </Stack>
+    </Stack>
   )
 }

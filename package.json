@@ -11,6 +11,10 @@
     "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@mantine/core": "^9.6.1",
+    "@mantine/hooks": "^9.6.1",
+    "@mantine/notifications": "^9.6.1",
     "leaflet": "^1.9.4",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
@@ -25,6 +29,9 @@
     "gh-pages": "^6.3.0",
     "oxlint": "^1.81.0",
     "playwright": "^1.63.0",
+    "postcss": "^8.5.28",
+    "postcss-preset-mantine": "^1.18.0",
+    "postcss-simple-vars": "^7.0.1",
     "typescript": "~5.9.3",
     "vite": "^8.3.0"
   }

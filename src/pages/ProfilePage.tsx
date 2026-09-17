@@ -1,9 +1,10 @@
+import { Button, Divider, FileButton, Group, Stack, Switch, Text, TextInput, Title } from '@mantine/core'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../app/AuthContext'
 import { dataClient } from '../data/client'
 import type { Review } from '../data/types'
-import { Header } from '../components/Header'
+import { AppHeader } from '../components/Header'
 
 interface ProfilePageProps {
   onMenu: () => void
@@ -12,94 +13,76 @@ interface ProfilePageProps {
 export function ProfilePage({ onMenu }: ProfilePageProps) {
   const { user, updateUser } = useAuth()
   const [reviews, setReviews] = useState<Review[]>([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     void dataClient.getReviews().then(setReviews)
   }, [])
 
-  if (!user) return <div className="loading">Loading…</div>
+  if (!user) return <Text p="xl">Loading…</Text>
 
   return (
-    <div className="page with-tabs with-header">
-      <Header
-        title="Profile"
-        showMenu
-        onMenu={onMenu}
-        right={
-          <Link to="/profile/edit" className="btn btn-ghost" style={{ minHeight: 40, fontSize: '1.1rem' }} aria-label="Edit">
-            ✎
-          </Link>
-        }
-      />
-      <div className="profile-row">
-        <div className="label">Name</div>
-        <div className="value">{user.name}</div>
-      </div>
-      <div className="profile-row row between">
-        <div className="label" style={{ margin: 0 }}>
-          Travel Document
-        </div>
-        <Link to="/profile/travel-document" className="link-pill" aria-label="Travel document">
-          ↗
-        </Link>
-      </div>
-      <div className="profile-row row between">
-        <div className="label" style={{ margin: 0 }}>
-          Vaccination Card
-        </div>
-        <Link to="/profile/vaccination" className="link-pill" aria-label="Vaccination">
-          ↗
-        </Link>
-      </div>
-      <div className="profile-row">
-        <div className="label">Country of Residence</div>
-        <div className="value">{user.countryOfResidence}</div>
-      </div>
-      <div className="divider" />
-      <div className="profile-row">
-        <div className="label">Destination</div>
-        <div className="value">{user.destination}</div>
-      </div>
-      <div className="profile-row">
-        <div className="label">Preferred Travel Type</div>
-        <div className="value">{user.preferredTravelType}</div>
-      </div>
-      <div className="divider" />
-      <div className="profile-row row between">
-        <span>Location Sharing</span>
-        <button
-          className={`toggle ${user.locationSharing ? 'on' : ''}`}
-          aria-pressed={user.locationSharing}
-          onClick={() => updateUser({ locationSharing: !user.locationSharing })}
-        />
-      </div>
-      <div className="profile-row row between">
-        <span>Notifications</span>
-        <button
-          className={`toggle ${user.notifications ? 'on' : ''}`}
-          aria-pressed={user.notifications}
-          onClick={() => updateUser({ notifications: !user.notifications })}
-        />
-      </div>
-      <div className="divider" />
-      <h2 className="h2">Reviews</h2>
-      {reviews.length === 0 ? (
-        <p className="muted">No reviews yet.</p>
-      ) : (
-        reviews.slice(0, 2).map((r) => (
-          <div key={r.id} style={{ marginBottom: 12 }}>
-            <div style={{ fontWeight: 700 }}>{r.placeName}</div>
-            <div className="hearts">{'♥'.repeat(r.rating)}</div>
-            <p className="muted" style={{ margin: '4px 0 0' }}>
-              {r.text}
-            </p>
-          </div>
-        ))
-      )}
-      <Link to="/my-reviews" className="btn btn-secondary btn-block" style={{ textDecoration: 'none', marginTop: 8 }}>
-        See all reviews
-      </Link>
-    </div>
+    <Stack gap={0}>
+      <AppHeader title="Profile" showMenu onMenu={onMenu} onEdit={() => navigate('/profile/edit')} />
+      <Stack gap="sm" p="md" pb={100}>
+        <Field label="Name" value={user.name} />
+        <Group justify="space-between">
+          <Text size="sm" c="dimmed">
+            Travel Document
+          </Text>
+          <Button component={Link} to="/profile/travel-document" variant="light" size="compact-sm" radius="xl">
+            Open
+          </Button>
+        </Group>
+        <Group justify="space-between">
+          <Text size="sm" c="dimmed">
+            Vaccination Card
+          </Text>
+          <Button component={Link} to="/profile/vaccination" variant="light" size="compact-sm" radius="xl">
+            Open
+          </Button>
+        </Group>
+        <Field label="Country of Residence" value={user.countryOfResidence} />
+        <Divider />
+        <Field label="Destination" value={user.destination} />
+        <Field label="Preferred Travel Type" value={user.preferredTravelType} />
+        <Divider />
+        <Group justify="space-between">
+          <Text>Location Sharing</Text>
+          <Switch
+            checked={user.locationSharing}
+            onChange={(e) => updateUser({ locationSharing: e.currentTarget.checked })}
+            color="dtp"
+          />
+        </Group>
+        <Group justify="space-between">
+          <Text>Notifications</Text>
+          <Switch
+            checked={user.notifications}
+            onChange={(e) => updateUser({ notifications: e.currentTarget.checked })}
+            color="dtp"
+          />
+        </Group>
+        <Divider />
+        <Title order={4}>Reviews</Title>
+        {reviews.length === 0 ? (
+          <Text c="dimmed">No reviews yet.</Text>
+        ) : (
+          reviews.slice(0, 2).map((r) => (
+            <Stack key={r.id} gap={4}>
+              <Text fw={700}>{r.placeName}</Text>
+              <Text c="dtp">{'♥'.repeat(r.rating)}</Text>
+              <Text size="sm" c="dimmed">
+                {r.text}
+              </Text>
+            </Stack>
+          ))
+        )}
+        <Button component={Link} to="/my-reviews" variant="light" fullWidth>
+          See all reviews
+        </Button>
+      </Stack>
+    </Stack>
   )
 }
 
@@ -107,51 +90,51 @@ export function ProfileEditPage() {
   const { user, updateUser } = useAuth()
   const [name, setName] = useState(user?.name ?? '')
   const [occupation, setOccupation] = useState(user?.occupation ?? '')
+  const navigate = useNavigate()
 
-  if (!user) return <div className="loading">Loading…</div>
+  if (!user) return <Text p="xl">Loading…</Text>
 
   return (
-    <div className="page with-tabs with-header">
-      <Header title="Edit Profile" showBack backTo="/profile" />
-      <div className="stack">
-        <div>
-          <label className="label">Name</label>
-          <input className="field" value={name} onChange={(e) => setName(e.target.value)} />
-        </div>
-        <div>
-          <label className="label">Occupation</label>
-          <input className="field" value={occupation} onChange={(e) => setOccupation(e.target.value)} />
-        </div>
-        <button
-          className="btn btn-primary btn-block"
-          onClick={() => updateUser({ name, occupation })}
+    <Stack gap={0}>
+      <AppHeader title="Edit Profile" showBack backTo="/profile" />
+      <Stack gap="md" p="md" pb={100}>
+        <TextInput label="Name" value={name} onChange={(e) => setName(e.currentTarget.value)} />
+        <TextInput label="Occupation" value={occupation} onChange={(e) => setOccupation(e.currentTarget.value)} />
+        <Button
+          onClick={() => {
+            updateUser({ name, occupation })
+            navigate('/profile')
+          }}
         >
           Save
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Stack>
+    </Stack>
   )
 }
 
 export function TravelDocumentPage() {
   const [fileName, setFileName] = useState<string | null>(null)
   return (
-    <div className="page with-tabs with-header">
-      <Header title="Travel Document" showBack backTo="/profile" />
-      <p className="muted">Passport status for this demo: Verified (mock).</p>
-      <div className="banner" style={{ fontSize: '1.1rem' }}>
-        Passport · Singapore · Valid
-      </div>
-      <label className="btn btn-secondary btn-block" style={{ cursor: 'pointer' }}>
-        Upload
-        <input
-          type="file"
-          hidden
-          onChange={(e) => setFileName(e.target.files?.[0]?.name ?? null)}
-        />
-      </label>
-      {fileName ? <p className="tiny">Selected: {fileName} (stored locally only)</p> : null}
-    </div>
+    <Stack gap={0}>
+      <AppHeader title="Travel Document" showBack backTo="/profile" />
+      <Stack gap="md" p="md" pb={100}>
+        <Text c="dimmed">Passport status for this demo: Verified (mock).</Text>
+        <CardBanner>Passport · Singapore · Valid</CardBanner>
+        <FileButton onChange={(file) => setFileName(file?.name ?? null)}>
+          {(props) => (
+            <Button {...props} variant="light">
+              Upload
+            </Button>
+          )}
+        </FileButton>
+        {fileName ? (
+          <Text size="xs" c="dimmed">
+            Selected: {fileName} (stored locally only)
+          </Text>
+        ) : null}
+      </Stack>
+    </Stack>
   )
 }
 
@@ -159,17 +142,52 @@ export function VaccinationPage() {
   const { user } = useAuth()
   const [fileName, setFileName] = useState<string | null>(null)
   return (
-    <div className="page with-tabs with-header">
-      <Header title="Vaccination Card" showBack backTo="/profile" />
-      <p className="muted">Status: {user?.vaccinationStatus ?? 'Unknown'}</p>
-      <div className="banner" style={{ fontSize: '1.1rem', background: 'var(--color-success)' }}>
-        {user?.vaccinationStatus ?? 'Not set'}
-      </div>
-      <label className="btn btn-secondary btn-block" style={{ cursor: 'pointer' }}>
-        Upload
-        <input type="file" hidden onChange={(e) => setFileName(e.target.files?.[0]?.name ?? null)} />
-      </label>
-      {fileName ? <p className="tiny">Selected: {fileName} (stored locally only)</p> : null}
+    <Stack gap={0}>
+      <AppHeader title="Vaccination Card" showBack backTo="/profile" />
+      <Stack gap="md" p="md" pb={100}>
+        <Text c="dimmed">Status: {user?.vaccinationStatus ?? 'Unknown'}</Text>
+        <CardBanner color="#2e9b6c">{user?.vaccinationStatus ?? 'Not set'}</CardBanner>
+        <FileButton onChange={(file) => setFileName(file?.name ?? null)}>
+          {(props) => (
+            <Button {...props} variant="light">
+              Upload
+            </Button>
+          )}
+        </FileButton>
+        {fileName ? (
+          <Text size="xs" c="dimmed">
+            Selected: {fileName} (stored locally only)
+          </Text>
+        ) : null}
+      </Stack>
+    </Stack>
+  )
+}
+
+function Field({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <Text size="sm" c="dimmed">
+        {label}
+      </Text>
+      <Text fw={700}>{value}</Text>
+    </div>
+  )
+}
+
+function CardBanner({ children, color }: { children: React.ReactNode; color?: string }) {
+  return (
+    <div
+      style={{
+        borderRadius: 12,
+        padding: '28px 18px',
+        background: color ?? '#78b1c2',
+        color: '#fff',
+        fontWeight: 800,
+        fontSize: '1.1rem',
+      }}
+    >
+      {children}
     </div>
   )
 }

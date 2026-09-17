@@ -1,73 +1,77 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { ActionIcon, Group, Text, UnstyledButton } from '@mantine/core'
+import type { ReactNode } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { IconArrowLeft, IconMenu2, IconPencil } from './icons'
 
 interface HeaderProps {
   title: string
   showMenu?: boolean
   showBack?: boolean
   backTo?: string
-  right?: React.ReactNode
   onMenu?: () => void
+  onEdit?: () => void
+  right?: ReactNode
 }
 
-export function Header({ title, showMenu, showBack, backTo, right, onMenu }: HeaderProps) {
+export function AppHeader({ title, showMenu, showBack, backTo, onMenu, onEdit, right }: HeaderProps) {
   const navigate = useNavigate()
 
   return (
     <header
       style={{
-        height: 'var(--header-h)',
-        display: 'grid',
-        gridTemplateColumns: '48px 1fr 48px',
-        alignItems: 'center',
-        padding: '0 8px',
         position: 'sticky',
         top: 0,
-        background: 'rgba(255,255,255,0.92)',
-        backdropFilter: 'blur(8px)',
         zIndex: 20,
+        height: 56,
+        padding: '0 12px',
+        display: 'flex',
+        alignItems: 'center',
+        background: 'rgba(255,255,255,0.94)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid var(--mantine-color-gray-2)',
       }}
     >
-      <div>
-        {showBack ? (
-          <button
-            className="btn btn-ghost"
-            style={{ minHeight: 40, padding: '6px 8px' }}
-            onClick={() => (backTo ? navigate(backTo) : navigate(-1))}
-            aria-label="Back"
-          >
-            ← Back
-          </button>
-        ) : showMenu ? (
-          <button
-            className="btn btn-ghost"
-            style={{ minHeight: 40, fontSize: '1.35rem', padding: '6px 10px' }}
-            onClick={onMenu}
-            aria-label="Open menu"
-          >
-            ☰
-          </button>
-        ) : (
-          <span />
-        )}
-      </div>
-      <h1 style={{ margin: 0, textAlign: 'center', fontSize: '1.05rem', fontWeight: 700 }}>{title}</h1>
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>{right}</div>
+      <Group h="100%" justify="space-between" wrap="nowrap" w="100%">
+        <Group w={64} justify="flex-start">
+          {showBack ? (
+            <UnstyledButton
+              onClick={() => (backTo ? navigate(backTo) : navigate(-1))}
+              c="dtp"
+              fw={700}
+              style={{ display: 'flex', alignItems: 'center', gap: 4 }}
+            >
+              <IconArrowLeft /> Back
+            </UnstyledButton>
+          ) : showMenu ? (
+            <ActionIcon variant="subtle" color="dtp" size="lg" onClick={onMenu} aria-label="Open menu">
+              <IconMenu2 />
+            </ActionIcon>
+          ) : null}
+        </Group>
+        <Text fw={700} size="lg" ta="center" style={{ flex: 1 }}>
+          {title}
+        </Text>
+        <Group w={64} justify="flex-end">
+          {onEdit ? (
+            <ActionIcon variant="subtle" color="dtp" size="lg" onClick={onEdit} aria-label="Edit">
+              <IconPencil />
+            </ActionIcon>
+          ) : (
+            right
+          )}
+        </Group>
+      </Group>
     </header>
   )
 }
 
+/** @deprecated prefer AppHeader */
+export const Header = AppHeader
+
 export function BrandMark({ large = false }: { large?: boolean }) {
   const base = import.meta.env.BASE_URL
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 10,
-        margin: large ? '24px 0 28px' : '8px 0',
-      }}
-    >
+    <Group justify="center" gap="sm" my={large ? 'xl' : 'md'}>
       <img
         src={`${base}brand/dtp-v1_logo_square.png`}
         alt="DTP logo"
@@ -75,28 +79,21 @@ export function BrandMark({ large = false }: { large?: boolean }) {
         height={large ? 64 : 40}
         style={{ borderRadius: 12 }}
       />
-      <span
-        style={{
-          fontSize: large ? '2.4rem' : '1.5rem',
-          fontWeight: 800,
-          color: 'var(--color-primary)',
-          letterSpacing: '-0.03em',
-        }}
+      <Text
+        c="dtp"
+        fw={800}
+        style={{ fontSize: large ? '2.4rem' : '1.5rem', letterSpacing: '-0.03em', lineHeight: 1 }}
       >
         dtp
-      </span>
-    </div>
+      </Text>
+    </Group>
   )
 }
 
 export function Copyright() {
-  return <p className="tiny" style={{ textAlign: 'center', marginTop: 24 }}>© 2026 DTP Support Services Corp.</p>
-}
-
-export function LinkButton({ to, children, className = 'btn btn-primary' }: { to: string; children: React.ReactNode; className?: string }) {
   return (
-    <Link to={to} className={className} style={{ textDecoration: 'none' }}>
-      {children}
-    </Link>
+    <Text size="xs" c="dimmed" ta="center" mt="lg">
+      © 2026 DTP Support Services Corp.
+    </Text>
   )
 }
