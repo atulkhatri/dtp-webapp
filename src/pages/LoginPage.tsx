@@ -110,7 +110,20 @@ export function LoginPage() {
           </button>
         </div>
       </form>
-      <p className="tiny" style={{ marginTop: 20, textAlign: 'center' }}>
+      <button
+        type="button"
+        className="btn btn-secondary btn-block"
+        style={{ marginTop: 16 }}
+        onClick={() => {
+          setEmail('maya.chen@example.com')
+          setPassword('travel2026')
+          setRole('tourist')
+          setError('')
+        }}
+      >
+        Fill demo credentials
+      </button>
+      <p className="tiny" style={{ marginTop: 12, textAlign: 'center' }}>
         Demo: maya.chen@example.com / travel2026
       </p>
       <Copyright />
