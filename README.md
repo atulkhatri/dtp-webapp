@@ -25,20 +25,33 @@ npm run preview
 
 ## Deploy (GitHub Pages)
 
-Repo is configured with `base: '/dtp-webapp/'`. The `gh-pages` branch is already published from CI/agent deploys.
+This repo is published as a **project site** with Vite `base: '/dtp-webapp/'`. Hosting uses the **`gh-pages` branch** (not the GitHub Actions `github-pages` environment).
+
+### One-time Pages settings
+
+In the GitHub UI:
+
+1. Open **Settings → Pages**
+2. Under **Build and deployment → Source**, choose **Deploy from a branch**
+3. Set **Branch** to `gh-pages` and folder to **`/(root)`**
+4. Save
+
+Live URL: https://atulkhatri.github.io/dtp-webapp/
+
+### Publish a new build
 
 ```bash
 npm run deploy
 ```
 
-Or push to `main` / this branch and use the GitHub Action in `.github/workflows/deploy-pages.yml`.
+That builds `dist`, then force-publishes a clean `gh-pages` branch containing only the built app (including `.nojekyll`).
 
-**One-time setup (needed for the lasting public URL):** GitHub → repo **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `gh-pages` / `/ (root)` → Save.**
+### Optional: GitHub Actions later
 
-Then open: https://atulkhatri.github.io/dtp-webapp/
+There is **no** Actions workflow that deploys to the protected `github-pages` environment. Branch-based `gh-pages` hosting is the default.
 
-Until Pages is enabled, you can also run `npm run build && npm run preview` locally, or use a temporary tunnel to the preview port.
+If you later prefer **Settings → Pages → Source: GitHub Actions**, you must also allow the deploying branch under **Settings → Environments → github-pages → Deployment branches** (for example allow `main`). Without that, Actions deploys fail with environment protection errors.
 
 ## Stack
 
-Vite · React · TypeScript · React Router · plain CSS · Leaflet/OSM · JSON mock data in `/public/data`
+Vite · React · TypeScript · React Router · Mantine · Leaflet/OSM · JSON mock data in `/public/data`
