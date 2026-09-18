@@ -33,8 +33,7 @@ export function AppHeader({ title, showMenu, showBack, backTo, onBack, onMenu, o
         padding: '0 12px',
         display: 'flex',
         alignItems: 'center',
-        background: 'rgba(255,255,255,0.94)',
-        backdropFilter: 'blur(10px)',
+        background: '#fff',
         borderBottom: '1px solid var(--mantine-color-gray-2)',
       }}
     >
