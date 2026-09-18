@@ -38,6 +38,8 @@ In the GitHub UI:
 
 Live URL: https://atulkhatri.github.io/dtp-webapp/
 
+Deep links such as `/login` or `/borders` work via a `404.html` copy of the SPA shell (GitHub Pages has no server rewrite for client routes).
+
 ### Publish a new build
 
 ```bash
