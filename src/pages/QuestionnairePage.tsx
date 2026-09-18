@@ -2,7 +2,7 @@ import { Button, Group, Image, Select, Stack, Text, TextInput } from '@mantine/c
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../app/AuthContext'
-import { dataClient } from '../data/client'
+import { assetUrl, dataClient } from '../data/client'
 import type { QuestionnaireOptions, UserProfile } from '../data/types'
 import { AppHeader, Copyright } from '../components/Header'
 
@@ -28,7 +28,7 @@ export function QuestionnairePage() {
         <AppHeader title="Questionnaire" />
         <div style={{ position: 'relative' }}>
           <Image
-            src="https://images.unsplash.com/photo-1488646953015-cd6cf9984c85?w=900&q=80"
+            src={assetUrl('images/questionnaire-hero.jpg')}
             alt="Travel"
             h={220}
             fit="cover"
@@ -76,7 +76,7 @@ export function QuestionnairePage() {
 
   return (
     <Stack gap={0}>
-      <AppHeader title="Questionnaire" showBack />
+      <AppHeader title="Questionnaire" showBack onBack={() => setStep('intro')} />
       <form
         onSubmit={(e) => {
           e.preventDefault()

@@ -3,28 +3,28 @@
     {
       "id": "terminal-maps",
       "title": "Terminal Maps",
-      "imageUrl": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1200&q=80",
+      "imageUrl": "images/borders-terminal.jpg",
       "summary": "Find gates, security, and amenities across the terminal.",
       "body": "Use terminal maps to locate your gate, security checkpoints, washrooms, and transfer routes. Allow extra walking time between piers, especially when connecting internationally."
     },
     {
       "id": "customs",
       "title": "Custom and Immigration",
-      "imageUrl": "https://images.unsplash.com/photo-1529074963764-98f45c47344b?w=1200&q=80",
+      "imageUrl": "images/borders-customs.jpg",
       "summary": "Arrival, declaration, and border processing tips.",
       "body": "Have your passport and any required travel documents ready before landing. Follow signs for customs and immigration, use Primary Inspection Kiosks when available, and declare restricted goods as required."
     },
     {
       "id": "shop-dine",
       "title": "Shop, Dine and Services",
-      "imageUrl": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80",
+      "imageUrl": "images/borders-shop.jpg",
       "summary": "Dining, retail, lounges, and passenger services.",
       "body": "Explore airside dining and retail after security, including local favourites and duty-free for international departures. Currency exchange, ATMs, and family facilities are signed throughout the terminal."
     },
     {
       "id": "parking",
       "title": "Parking",
-      "imageUrl": "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=1200&q=80",
+      "imageUrl": "images/borders-parking.jpg",
       "summary": "Short-term, long-term, and transit options.",
       "body": "Parkades connect to the terminal via covered walkways. Economy lots offer shuttle service for longer stays. Canada Line SkyTrain is often the fastest way downtown\u2014pre-book parking online during peak season."
     }

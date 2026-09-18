@@ -10,10 +10,17 @@
     "website": "https://www.fairmont.com/waterfront-vancouver/",
     "phone": "+1 866 540 4509",
     "petFriendly": true,
-    "amenities": ["Wi-Fi", "Spa", "Pool", "Fitness", "Restaurant", "Pet-friendly"],
+    "amenities": [
+      "Wi-Fi",
+      "Spa",
+      "Pool",
+      "Fitness",
+      "Restaurant",
+      "Pet-friendly"
+    ],
     "lat": 49.2897,
     "lng": -123.1119,
-    "imageUrl": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
+    "imageUrl": "images/stays-fairmont-waterfront.jpg",
     "description": "Waterfront luxury hotel steps from Canada Place with harbour views and rooftop herb garden."
   },
   {
@@ -27,10 +34,16 @@
     "website": "https://www.pinnacleharbourfronthotel.com/",
     "phone": "+1 604 689 9211",
     "petFriendly": true,
-    "amenities": ["Wi-Fi", "Pool", "Fitness", "Restaurant", "Pet-friendly"],
+    "amenities": [
+      "Wi-Fi",
+      "Pool",
+      "Fitness",
+      "Restaurant",
+      "Pet-friendly"
+    ],
     "lat": 49.2885,
     "lng": -123.1185,
-    "imageUrl": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80",
+    "imageUrl": "images/stays-pinnacle.jpg",
     "description": "Harbourfront stay with marina views and easy access to Stanley Park seawall."
   },
   {
@@ -44,11 +57,17 @@
     "website": "https://www.fairmont.com/hotel-vancouver/",
     "phone": "+1 604 684 3131",
     "petFriendly": false,
-    "amenities": ["Wi-Fi", "Spa", "Fitness", "Restaurant", "Concierge"],
+    "amenities": [
+      "Wi-Fi",
+      "Spa",
+      "Fitness",
+      "Restaurant",
+      "Concierge"
+    ],
     "lat": 49.2838,
     "lng": -123.1207,
-    "imageUrl": "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80",
-    "description": "Iconic château-style landmark hotel in the heart of downtown Vancouver."
+    "imageUrl": "images/stays-fairmont-vancouver.jpg",
+    "description": "Iconic ch\u00e2teau-style landmark hotel in the heart of downtown Vancouver."
   },
   {
     "id": "pan-pacific-vancouver",
@@ -61,10 +80,18 @@
     "website": "https://www.panpacific.com/en/hotels-and-resorts/pp-vancouver.html",
     "phone": "+1 604 662 8111",
     "petFriendly": true,
-    "amenities": ["Wi-Fi", "Spa", "Pool", "Fitness", "Restaurant", "Pet-friendly", "Harbour view"],
+    "amenities": [
+      "Wi-Fi",
+      "Spa",
+      "Pool",
+      "Fitness",
+      "Restaurant",
+      "Pet-friendly",
+      "Harbour view"
+    ],
     "lat": 49.2888,
     "lng": -123.1115,
-    "imageUrl": "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80",
+    "imageUrl": "images/stays-pan-pacific.jpg",
     "description": "Sails-of-Canada Place hotel with cruise terminal access and panoramic harbour views."
   },
   {
@@ -78,10 +105,15 @@
     "website": "https://www.sylviahotel.com/",
     "phone": "+1 604 681 9321",
     "petFriendly": true,
-    "amenities": ["Wi-Fi", "Restaurant", "Pet-friendly", "Beach nearby"],
+    "amenities": [
+      "Wi-Fi",
+      "Restaurant",
+      "Pet-friendly",
+      "Beach nearby"
+    ],
     "lat": 49.2905,
     "lng": -123.1402,
-    "imageUrl": "https://images.unsplash.com/photo-1611892440504-36a67e95b865?w=800&q=80",
+    "imageUrl": "images/stays-sylvia.jpg",
     "description": "Heritage boutique hotel overlooking English Bay, popular with pets and beachgoers."
   },
   {
@@ -95,10 +127,16 @@
     "website": "https://www.opushotel.com/vancouver/",
     "phone": "+1 604 642 6787",
     "petFriendly": true,
-    "amenities": ["Wi-Fi", "Restaurant", "Bar", "Fitness", "Pet-friendly"],
+    "amenities": [
+      "Wi-Fi",
+      "Restaurant",
+      "Bar",
+      "Fitness",
+      "Pet-friendly"
+    ],
     "lat": 49.2758,
     "lng": -123.1218,
-    "imageUrl": "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80",
+    "imageUrl": "images/stays-opus.jpg",
     "description": "Design-forward Yaletown boutique hotel near restaurants, shops, and False Creek."
   }
 ]

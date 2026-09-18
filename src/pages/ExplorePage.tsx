@@ -13,7 +13,7 @@ import {
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../app/AuthContext'
-import { dataClient } from '../data/client'
+import { assetUrl, dataClient } from '../data/client'
 import type { ExplorePlace } from '../data/types'
 import { AppHeader } from '../components/Header'
 import { MapView } from '../components/MapView'
@@ -54,7 +54,7 @@ export function ExplorePage({ onMenu }: ExplorePageProps) {
       <AppHeader title="Explore" showMenu onMenu={onMenu} />
       <div style={{ position: 'relative' }}>
         <Image
-          src="https://images.unsplash.com/photo-1559511260-66a654ae982a?w=900&q=80"
+          src={assetUrl('images/explore-hero.jpg')}
           alt="Vancouver"
           h={160}
           fit="cover"

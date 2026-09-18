@@ -25,7 +25,7 @@
         "id": "terminal-maps",
         "title": "Terminal Maps",
         "summary": "Find gates, security, and amenities",
-        "imageUrl": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80",
+        "imageUrl": "images/borders-terminal.jpg",
         "tips": [
           "Domestic and international departures share the Main Terminal.",
           "Allow extra time to walk between Pier A and Pier C.",
@@ -37,7 +37,7 @@
         "id": "customs",
         "title": "Custom and Immigration",
         "summary": "Arrival and declaration tips",
-        "imageUrl": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80",
+        "imageUrl": "images/trip-customs.jpg",
         "tips": [
           "Have passport and customs declaration ready before landing.",
           "Use Primary Inspection Kiosks when available.",
@@ -49,7 +49,7 @@
         "id": "shop-dine",
         "title": "Shop, Dine and Services",
         "summary": "Dining, retail, and lounges",
-        "imageUrl": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80",
+        "imageUrl": "images/explore-granville.jpg",
         "tips": [
           "Local favourites and national chains are airside after security.",
           "Duty-free is available for international departures.",
@@ -61,7 +61,7 @@
         "id": "parking",
         "title": "Parking",
         "summary": "Short-term, long-term, and transit",
-        "imageUrl": "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=800&q=80",
+        "imageUrl": "images/borders-parking.jpg",
         "tips": [
           "Parkade connects directly to the terminal via covered walkways.",
           "Economy lots offer shuttle service for longer stays.",

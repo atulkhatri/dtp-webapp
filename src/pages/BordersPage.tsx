@@ -1,7 +1,7 @@
 import { Image, Loader, Stack, Text, UnstyledButton } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { dataClient } from '../data/client'
+import { assetUrl, dataClient } from '../data/client'
 import type { BordersData } from '../data/types'
 import { AppHeader } from '../components/Header'
 
@@ -42,7 +42,7 @@ export function BordersPage({ onMenu }: BordersPageProps) {
                 radius="md"
                 h={168}
                 fit="cover"
-                fallbackSrc="https://placehold.co/800x400/ebebfd/7879ff?text=DTP"
+                fallbackSrc={assetUrl('images/borders-terminal.jpg')}
               />
               <Text fw={700} size="lg">
                 {item.title}

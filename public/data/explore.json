@@ -3,96 +3,124 @@
     "id": "vancouver-convention-centre",
     "name": "Vancouver Convention Centre",
     "category": "Fun",
-    "categories": ["Fun", "All"],
+    "categories": [
+      "Fun",
+      "All"
+    ],
     "address": "1055 Canada Pl, Vancouver, BC V6C 0C3",
     "description": "Waterfront convention campus with a living roof, public plazas, and harbour trails.",
     "lat": 49.2892,
     "lng": -123.1141,
-    "imageUrl": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+    "imageUrl": "images/explore-convention.jpg",
     "hours": "Open daily for public plazas"
   },
   {
     "id": "canada-place",
     "name": "Canada Place",
     "category": "Fun",
-    "categories": ["Fun", "All"],
+    "categories": [
+      "Fun",
+      "All"
+    ],
     "address": "999 Canada Pl, Vancouver, BC V6C 3T4",
     "description": "Iconic sail-roofed pier with cruise ships, flyover attraction, and seawall access.",
     "lat": 49.2888,
     "lng": -123.1112,
-    "imageUrl": "https://images.unsplash.com/photo-1559511260-66a654ae982a?w=800&q=80",
+    "imageUrl": "images/explore-canada-place.jpg",
     "hours": "Open 24 hours (outdoor areas)"
   },
   {
     "id": "stanley-park",
     "name": "Stanley Park Seawall",
     "category": "Sports",
-    "categories": ["Sports", "Fun", "All"],
+    "categories": [
+      "Sports",
+      "Fun",
+      "All"
+    ],
     "address": "Vancouver, BC V6G 1Z4",
     "description": "Scenic 10 km loop for walking, running, and cycling around Stanley Park.",
     "lat": 49.3017,
     "lng": -123.1417,
-    "imageUrl": "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&q=80",
+    "imageUrl": "images/explore-stanley-park.jpg",
     "hours": "Open daily dawn to dusk"
   },
   {
     "id": "rogers-arena",
     "name": "Rogers Arena",
     "category": "Sports",
-    "categories": ["Sports", "Music", "All"],
+    "categories": [
+      "Sports",
+      "Music",
+      "All"
+    ],
     "address": "800 Griffiths Way, Vancouver, BC V6B 6G1",
     "description": "Home of the Canucks and major concerts in downtown Vancouver.",
     "lat": 49.2778,
     "lng": -123.1089,
-    "imageUrl": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&q=80",
+    "imageUrl": "images/explore-rogers.jpg",
     "hours": "Event schedule varies"
   },
   {
     "id": "commodore-ballroom",
     "name": "Commodore Ballroom",
     "category": "Music",
-    "categories": ["Music", "Fun", "All"],
+    "categories": [
+      "Music",
+      "Fun",
+      "All"
+    ],
     "address": "868 Granville St, Vancouver, BC V6Z 1K3",
     "description": "Historic Granville Street venue hosting live music and dance nights.",
     "lat": 49.2806,
     "lng": -123.1205,
-    "imageUrl": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=80",
+    "imageUrl": "images/explore-commodore.jpg",
     "hours": "Shows most evenings"
   },
   {
     "id": "granville-island",
     "name": "Granville Island Public Market",
     "category": "Fun",
-    "categories": ["Fun", "All"],
+    "categories": [
+      "Fun",
+      "All"
+    ],
     "address": "1689 Johnston St, Vancouver, BC V6H 3R9",
     "description": "Artisan market, food stalls, galleries, and waterfront entertainment.",
     "lat": 49.2712,
-    "lng": -123.1340,
-    "imageUrl": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80",
-    "hours": "Market typically 9am–7pm"
+    "lng": -123.134,
+    "imageUrl": "images/explore-granville.jpg",
+    "hours": "Market typically 9am\u20137pm"
   },
   {
     "id": "bc-place",
     "name": "BC Place",
     "category": "Sports",
-    "categories": ["Sports", "Music", "All"],
+    "categories": [
+      "Sports",
+      "Music",
+      "All"
+    ],
     "address": "777 Pacific Blvd, Vancouver, BC V6B 4Y8",
     "description": "Retractable-roof stadium for Whitecaps, Lions, and large events.",
     "lat": 49.2767,
     "lng": -123.1119,
-    "imageUrl": "https://images.unsplash.com/photo-1459865264687-595d652de67e?w=800&q=80",
+    "imageUrl": "images/explore-bc-place.jpg",
     "hours": "Event schedule varies"
   },
   {
     "id": "orpheum",
     "name": "Orpheum Theatre",
     "category": "Music",
-    "categories": ["Music", "All"],
+    "categories": [
+      "Music",
+      "All"
+    ],
     "address": "601 Smithe St, Vancouver, BC V6B 3L4",
     "description": "Restored heritage theatre and home of the Vancouver Symphony Orchestra.",
     "lat": 49.2801,
     "lng": -123.1208,
-    "imageUrl": "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=800&q=80",
+    "imageUrl": "images/explore-orpheum.jpg",
     "hours": "Performance nights"
   }
 ]
