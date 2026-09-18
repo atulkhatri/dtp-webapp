@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local planning / source artifacts (kept out of public repo)
+_extracted/
+_pptx_extract/
+resources/
+.cursor/
