@@ -1,0 +1,25 @@
+{
+  "name": "DTP — Digital Traveller Profile",
+  "short_name": "DTP",
+  "description": "Digital Traveller Profile — borders, stays, flights, and explore.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#7879FF",
+  "icons": [
+    {
+      "src": "brand/dtp-v1_logo_square.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "brand/dtp-v1_logo_square.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

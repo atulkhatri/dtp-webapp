@@ -40,6 +40,16 @@ Live URL: https://atulkhatri.github.io/dtp-webapp/
 
 Deep links such as `/login` or `/borders` work via a `404.html` copy of the SPA shell (GitHub Pages has no server rewrite for client routes).
 
+### Add to Home Screen (iPhone)
+
+The app ships a web manifest with `display: "standalone"` plus Apple web-app meta tags. After publishing a build:
+
+1. Open the site in **Safari**
+2. Share → **Add to Home Screen**
+3. Open from the home screen icon (not from Safari tabs)
+
+If you already added it earlier, delete the old icon and add it again so iOS picks up the new standalone settings.
+
 ### Publish a new build
 
 ```bash
