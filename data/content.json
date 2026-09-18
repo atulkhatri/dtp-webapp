@@ -1,0 +1,26 @@
+{
+  "about": {
+    "title": "About DTP",
+    "body": "DTP (Digital Traveller Profile) helps tourists manage borders, stays, flights, and local discovery in one place. Built by DTP Support Services Corp."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "email": "hello@dtpsupport.com",
+    "website": "https://www.dtpsupport.com",
+    "body": "Questions about your trip or the demo app? Reach out and we will get back to you."
+  },
+  "workWithUs": {
+    "title": "Work with Us",
+    "body": "Hospitality partners can access anonymized traveller insights to improve services. Business features are coming soon in this demo."
+  },
+  "settings": {
+    "title": "Settings",
+    "items": [
+      { "id": "language", "label": "Language", "value": "English" },
+      { "id": "currency", "label": "Currency", "value": "CAD" },
+      { "id": "units", "label": "Distance units", "value": "Kilometres" },
+      { "id": "theme", "label": "Appearance", "value": "Light" }
+    ]
+  },
+  "copyright": "© 2026 DTP Support Services Corp."
+}

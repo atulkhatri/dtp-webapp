@@ -1,0 +1,142 @@
+[
+  {
+    "id": "fairmont-waterfront",
+    "name": "Fairmont Waterfront",
+    "neighborhood": "Downtown",
+    "address": "900 Canada Pl, Vancouver, BC V6C 3L5",
+    "rating": 5,
+    "priceFrom": 222,
+    "currency": "CAD",
+    "website": "https://www.fairmont.com/waterfront-vancouver/",
+    "phone": "+1 866 540 4509",
+    "petFriendly": true,
+    "amenities": [
+      "Wi-Fi",
+      "Spa",
+      "Pool",
+      "Fitness",
+      "Restaurant",
+      "Pet-friendly"
+    ],
+    "lat": 49.2897,
+    "lng": -123.1119,
+    "imageUrl": "images/stays-fairmont-waterfront.jpg",
+    "description": "Waterfront luxury hotel steps from Canada Place with harbour views and rooftop herb garden."
+  },
+  {
+    "id": "pinnacle-harbourfront",
+    "name": "Pinnacle Hotel Harbourfront",
+    "neighborhood": "Coal Harbour",
+    "address": "1133 W Hastings St, Vancouver, BC V6E 3T3",
+    "rating": 4,
+    "priceFrom": 189,
+    "currency": "CAD",
+    "website": "https://www.pinnacleharbourfronthotel.com/",
+    "phone": "+1 604 689 9211",
+    "petFriendly": true,
+    "amenities": [
+      "Wi-Fi",
+      "Pool",
+      "Fitness",
+      "Restaurant",
+      "Pet-friendly"
+    ],
+    "lat": 49.2885,
+    "lng": -123.1185,
+    "imageUrl": "images/stays-pinnacle.jpg",
+    "description": "Harbourfront stay with marina views and easy access to Stanley Park seawall."
+  },
+  {
+    "id": "fairmont-hotel-vancouver",
+    "name": "Fairmont Hotel Vancouver",
+    "neighborhood": "Downtown",
+    "address": "900 W Georgia St, Vancouver, BC V6C 2W6",
+    "rating": 5,
+    "priceFrom": 245,
+    "currency": "CAD",
+    "website": "https://www.fairmont.com/hotel-vancouver/",
+    "phone": "+1 604 684 3131",
+    "petFriendly": false,
+    "amenities": [
+      "Wi-Fi",
+      "Spa",
+      "Fitness",
+      "Restaurant",
+      "Concierge"
+    ],
+    "lat": 49.2838,
+    "lng": -123.1207,
+    "imageUrl": "images/stays-fairmont-vancouver.jpg",
+    "description": "Iconic ch\u00e2teau-style landmark hotel in the heart of downtown Vancouver."
+  },
+  {
+    "id": "pan-pacific-vancouver",
+    "name": "Pan Pacific Vancouver",
+    "neighborhood": "Canada Place",
+    "address": "999 Canada Pl, Vancouver, BC V6C 3B5",
+    "rating": 5,
+    "priceFrom": 268,
+    "currency": "CAD",
+    "website": "https://www.panpacific.com/en/hotels-and-resorts/pp-vancouver.html",
+    "phone": "+1 604 662 8111",
+    "petFriendly": true,
+    "amenities": [
+      "Wi-Fi",
+      "Spa",
+      "Pool",
+      "Fitness",
+      "Restaurant",
+      "Pet-friendly",
+      "Harbour view"
+    ],
+    "lat": 49.2888,
+    "lng": -123.1115,
+    "imageUrl": "images/stays-pan-pacific.jpg",
+    "description": "Sails-of-Canada Place hotel with cruise terminal access and panoramic harbour views."
+  },
+  {
+    "id": "sylvia-hotel",
+    "name": "Sylvia Hotel",
+    "neighborhood": "English Bay",
+    "address": "1154 Gilford St, Vancouver, BC V6G 2P6",
+    "rating": 4,
+    "priceFrom": 165,
+    "currency": "CAD",
+    "website": "https://www.sylviahotel.com/",
+    "phone": "+1 604 681 9321",
+    "petFriendly": true,
+    "amenities": [
+      "Wi-Fi",
+      "Restaurant",
+      "Pet-friendly",
+      "Beach nearby"
+    ],
+    "lat": 49.2905,
+    "lng": -123.1402,
+    "imageUrl": "images/stays-sylvia.jpg",
+    "description": "Heritage boutique hotel overlooking English Bay, popular with pets and beachgoers."
+  },
+  {
+    "id": "opus-vancouver",
+    "name": "Opus Hotel Vancouver",
+    "neighborhood": "Yaletown",
+    "address": "322 Davie St, Vancouver, BC V6B 5Z6",
+    "rating": 4,
+    "priceFrom": 210,
+    "currency": "CAD",
+    "website": "https://www.opushotel.com/vancouver/",
+    "phone": "+1 604 642 6787",
+    "petFriendly": true,
+    "amenities": [
+      "Wi-Fi",
+      "Restaurant",
+      "Bar",
+      "Fitness",
+      "Pet-friendly"
+    ],
+    "lat": 49.2758,
+    "lng": -123.1218,
+    "imageUrl": "images/stays-opus.jpg",
+    "description": "Design-forward Yaletown boutique hotel near restaurants, shops, and False Creek."
+  }
+]

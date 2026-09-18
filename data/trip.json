@@ -1,0 +1,104 @@
+{
+  "flight": {
+    "flightNumber": "AC301",
+    "airline": "Air Canada",
+    "from": "Singapore (SIN)",
+    "to": "Vancouver (YVR)",
+    "departureDate": "2026-06-12",
+    "departureTime": "09:15AM",
+    "departureLabel": "Jun 12, 2026 09:15AM",
+    "checkInBefore": "8:15AM",
+    "boarding": "8:45AM",
+    "gate": "B12",
+    "class": "Economy",
+    "seat": "14C",
+    "status": "On time",
+    "terminal": "Main Terminal",
+    "passengerName": "Maya Chen",
+    "confirmationCode": "DTP8K2"
+  },
+  "airport": {
+    "name": "Vancouver International Airport (YVR)",
+    "code": "YVR",
+    "categories": [
+      {
+        "id": "terminal-maps",
+        "title": "Terminal Maps",
+        "summary": "Find gates, security, and amenities",
+        "imageUrl": "images/borders-terminal.jpg",
+        "tips": [
+          "Domestic and international departures share the Main Terminal.",
+          "Allow extra time to walk between Pier A and Pier C.",
+          "Free Wi-Fi is available throughout the terminal.",
+          "Follow purple wayfinding signs to Canada Line and parking."
+        ]
+      },
+      {
+        "id": "customs",
+        "title": "Custom and Immigration",
+        "summary": "Arrival and declaration tips",
+        "imageUrl": "images/trip-customs.jpg",
+        "tips": [
+          "Have passport and customs declaration ready before landing.",
+          "Use Primary Inspection Kiosks when available.",
+          "Declare food, plants, and currency over CAD $10,000.",
+          "NEXUS lanes can speed eligible travellers."
+        ]
+      },
+      {
+        "id": "shop-dine",
+        "title": "Shop, Dine and Services",
+        "summary": "Dining, retail, and lounges",
+        "imageUrl": "images/explore-granville.jpg",
+        "tips": [
+          "Local favourites and national chains are airside after security.",
+          "Duty-free is available for international departures.",
+          "Currency exchange and ATMs are near arrivals and departures.",
+          "Family washrooms and nursing rooms are clearly signed."
+        ]
+      },
+      {
+        "id": "parking",
+        "title": "Parking",
+        "summary": "Short-term, long-term, and transit",
+        "imageUrl": "images/borders-parking.jpg",
+        "tips": [
+          "Parkade connects directly to the terminal via covered walkways.",
+          "Economy lots offer shuttle service for longer stays.",
+          "Canada Line SkyTrain is often faster than driving downtown.",
+          "Pre-book parking online for better rates during peak season."
+        ]
+      }
+    ]
+  },
+  "booking": {
+    "hotelConfirmation": "FW-48219",
+    "hotelName": "Fairmont Waterfront",
+    "checkIn": "Thu 7/4",
+    "checkOut": "Fri 8/4",
+    "rooms": 1,
+    "guests": 2,
+    "flightSummary": "AC301 · SIN → YVR · Jun 12, 2026",
+    "notes": "Late check-in available until midnight. Concierge has your preference for a harbour-view room."
+  },
+  "transportation": [
+    {
+      "id": "airport-shuttle",
+      "name": "Airport Shuttle",
+      "detail": "Shared van to downtown hotels · ~30–45 min · from CAD $20",
+      "tips": "Book at the ground transportation desk or via the hotel concierge."
+    },
+    {
+      "id": "skytrain",
+      "name": "Canada Line SkyTrain",
+      "detail": "YVR → Waterfront Station · ~25 min · Compass Card / contactless",
+      "tips": "Trains run frequently; follow signs marked Canada Line from arrivals."
+    },
+    {
+      "id": "rideshare",
+      "name": "Rideshare",
+      "detail": "Uber / Lyft pickup zone · ~20–35 min depending on traffic",
+      "tips": "Use the designated rideshare pickup area outside International Arrivals."
+    }
+  ]
+}
