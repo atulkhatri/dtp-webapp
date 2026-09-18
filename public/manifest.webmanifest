@@ -10,13 +10,19 @@
   "theme_color": "#7879FF",
   "icons": [
     {
-      "src": "brand/dtp-v1_logo_square.png",
+      "src": "favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "brand/dtp-v1_logo_square.png",
+      "src": "favicon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
