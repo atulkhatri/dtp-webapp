@@ -8,13 +8,20 @@ interface HeaderProps {
   showMenu?: boolean
   showBack?: boolean
   backTo?: string
+  onBack?: () => void
   onMenu?: () => void
   onEdit?: () => void
   right?: ReactNode
 }
 
-export function AppHeader({ title, showMenu, showBack, backTo, onMenu, onEdit, right }: HeaderProps) {
+export function AppHeader({ title, showMenu, showBack, backTo, onBack, onMenu, onEdit, right }: HeaderProps) {
   const navigate = useNavigate()
+
+  function handleBack() {
+    if (onBack) onBack()
+    else if (backTo) navigate(backTo)
+    else navigate(-1)
+  }
 
   return (
     <header
@@ -35,7 +42,8 @@ export function AppHeader({ title, showMenu, showBack, backTo, onMenu, onEdit, r
         <Group w={64} justify="flex-start">
           {showBack ? (
             <UnstyledButton
-              onClick={() => (backTo ? navigate(backTo) : navigate(-1))}
+              type="button"
+              onClick={handleBack}
               c="dtp"
               fw={700}
               style={{ display: 'flex', alignItems: 'center', gap: 4 }}
